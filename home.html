@@ -9,6 +9,8 @@
 
 	<!-- css -->
 	<link rel="stylesheet" href="static/css/foundation.css">
+	<link rel="stylesheet" href="static/css/text.css">
+	<link rel="stylesheet" href="static/css/border.css">
 
 	<!-- js -->
 	<script src="static/js/vendor/custom.modernizr.js"></script>
@@ -18,9 +20,164 @@
 		<label class="inline"><h2>CS 499 Independent Study: Grapth Theory and Algorithms</h2></label>
 	</div>
 	<div class="row">
-		<label><h3></h3></label>
+		<a name="about"></a>
+		<label><h2>About:</h2></label>
 	</div>
+	<div class="row">
+		<p class="nice_paragraph">
+			I have spent the semester studying graph theory and algorithms through <a class="title" href="http://www.algorist.com/">The Algorithm Design Manuel</a>.
+			In this time I have learned the basics of graph theory in order to understand some of the most important
+			graphing algorithms: <a href="#prims_algorithm">Prim's</a> and <a href="#kruskels_algorithm">Kruskels's</a>
+			for minimum spanning trees, <a href="#dijkstras_algorithm">Dijkstra's</a> and <a href="#all_pair_algorithm">All-Pair's</a> for shortest
+			paths. Below you will find an application, coded with HTML5 and Javascript, to demonstrate the named algorithms
+			as well as a <a href="#my_algorithm">pathing algorithm</a> designed by myself.
+		</p>
+	</div>
+	<div class="row" style="height: 600px;">
+		<div class="row closed" style="height: 80%">
+			<div class="large-2 columns closed parent_height">
+				<div class="row">
+					&nbsp;
+				</div>
 
+				<div class="row">
+					<div class="large-12 columns">
+						<a class="button radius fill small fit_text">Prim's Algorithm</a>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="large-12 columns">
+						<a class="button radius fill small fit_text">Kruskel's Algorithm</a>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="large-12 columns">
+						<a class="button radius fill small fit_text">Dijkstra's Algorithm</a>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="large-12 columns">
+						<a class="button radius fill small fit_text">All Pair's Algorithm</a>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="large-12 columns">
+						<a class="button radius fill small fit_text">My Algorithm</a>
+					</div>
+				</div>
+
+			</div>
+			<div class="large-10 columns closed parent_height">
+
+			</div>
+		</div>
+		<div class="row closed" style="height: 20%">
+			<div class="large-6 columns closed parent_height">
+
+			</div>
+			<div class="large-6 columns closed parent_height">
+
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<fieldset>
+			<legend>Rules</legend>
+			<ul>
+				<div class="large-6 columns">
+					<li>Simple terrain has a movement weight of 0</li>
+					<li>Difficult terrain has a movement weight of 1</li>
+					<li>Ardous terrain has a movement weight of 2</li>
+				</div>
+				<div class="large-6 columns">
+					<li>A height difference of one hex will always have a weight of 1</li>
+					<li>Moving up hill is exponentially harder the larger the gap</li>
+					<li>Moving down hill is linearly harder the larger the gap</li>
+				</div>	
+			</ul>
+		</fieldset>
+	</div>
+	<div class="row">
+		<label><h2>Algorithms</h2></label>
+		<!-- ### Prims ### -->
+		<div class="large-10 large-offset-1 columns end">
+			<div class="row">
+				<div class="large-12 columns">
+					<a name="prims_algorithm"></a>
+					<label><h3>Prim's Algorithm</h3></label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="large-10 large-offset-1 end columns nice_paragraph">
+					<p>Here is where I will describe Prim's algorithm as well as psudo code and what nots.</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- ### Kruskels ### -->
+		<div class="large-10 large-offset-1 columns end">
+			<div class="row">
+				<div class="large-12 columns">
+					<a name="kruskels_algorithm"></a>
+					<label><h3>Kruskel's Algorithm</h3></label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="large-10 large-offset-1 end columns nice_paragraph">
+					<p>Here is where I will describe Prim's algorithm as well as psudo code and what nots.</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- ### Dijkstra ### -->
+		<div class="large-10 large-offset-1 columns end">
+			<div class="row">
+				<div class="large-12 columns">
+					<a name="dijkstras_algorithm"></a>
+					<label><h3>Dijkstra's Algorithm</h3></label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="large-10 large-offset-1 end columns nice_paragraph">
+					<p>Here is where I will describe Prim's algorithm as well as psudo code and what nots.</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- ### All Pairs ### -->
+		<div class="large-10 large-offset-1 columns end">
+			<div class="row">
+				<div class="large-12 columns">
+					<a name="all_pair_algorithm"></a>
+					<label><h3>All Pair's Algorithm</h3></label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="large-10 large-offset-1 end columns nice_paragraph">
+					<p>Here is where I will describe Prim's algorithm as well as psudo code and what nots.</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- ### My Algorithm ### -->
+		<div class="large-10 large-offset-1 columns end">
+			<div class="row">
+				<div class="large-12 columns">
+					<a name="my_algorithm"></a>
+					<label><h3>My Path Finding Algorithm</h3></label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="large-10 large-offset-1 end columns nice_paragraph">
+					<p>Here is where I will describe Prim's algorithm as well as psudo code and what nots.</p>
+				</div>
+			</div>
+		</div>
+	</div>
 	<!-- Load JS Files -->
 	<script>
 		// --- Foundation JS Files --- //
