@@ -36,43 +36,54 @@
 	<div class="row" style="height: 600px;">
 		<div class="row closed" style="height: 80%">
 			<div class="large-2 columns closed parent_height">
-				<div class="row">
-					&nbsp;
-				</div>
+				<div class="row parent_height half closed" id="button_pannel">
 
-				<div class="row">
-					<div class="large-12 columns">
-						<a class="button radius fill small fit_text">Prim's Algorithm</a>
+					<div class="row" style="padding-top: 3px;">
+						<div class="large-12 columns">
+							<a id="prims_button" class="button radius fill small fit_text">Prim's Algorithm</a>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="large-12 columns">
+							<a id="kruskels_button" class="button radius fill small fit_text">Kruskel's Algorithm</a>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="large-12 columns">
+							<a id="dijkstras_button" class="button radius fill small fit_text">Dijkstra's Algorithm</a>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="large-12 columns">
+							<a id="all_pairs_button" class="button radius fill small fit_text">All Pair's Algorithm</a>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="large-12 columns">
+							<a id="my_button" class="button radius fill small fit_text">My Algorithm</a>
+						</div>
 					</div>
 				</div>
+				<div class="row parent_height half closed">
+					<div class="row">
+						<div class="large-12 columns">
+							<label class="inline" style="margin: 0; padding: 0; margin-left: 2px;"><h4>Info</h4></label>
+						</div>
+						<div lass="large-12 columns" id="info_panel">
 
-				<div class="row">
-					<div class="large-12 columns">
-						<a class="button radius fill small fit_text">Kruskel's Algorithm</a>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="large-12 columns">
-						<a class="button radius fill small fit_text">Dijkstra's Algorithm</a>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="large-12 columns">
-						<a class="button radius fill small fit_text">All Pair's Algorithm</a>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="large-12 columns">
-						<a class="button radius fill small fit_text">My Algorithm</a>
+						</div> 
 					</div>
 				</div>
 
 			</div>
 			<div class="large-10 columns closed parent_height">
-
+				<canvas id="grid_canvas" class="fill" style="margin: 0;">
+					
+				</canvas>
 			</div>
 		</div>
 		<div class="row closed" style="height: 20%">
@@ -191,5 +202,8 @@
 		<script>
 		$(document).foundation();
 	</script>
+
+	
+	<script src="static/js/page_load.js"></script>
 </body>
 </html>

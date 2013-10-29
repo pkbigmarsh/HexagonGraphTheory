@@ -9,5 +9,10 @@
 
 .fill {
 	height: 100%;
-	width: 100%;
+	width: 98%;
+	margin-left: 2%;
+}
+
+.parent_height.half {
+	height: 50%;
 }
