@@ -8,6 +8,9 @@ $(document).ready(function() {
 		context: ctx
 	});
 
-	grid.draw_hex(50,50,HEX_RADIUS);
-	grid.draw_hex(50,50 + (Math.sin(Math.PI / 3) * 2 * HEX_RADIUS),HEX_RADIUS);
+	grid.draw_hex(50,50);
+	grid.draw_hex(50,50 - HEX_BASE);
+	grid.draw_hex(50,50 + HEX_RADIUS * 2 * Math.sin(Math.PI / 3));
+
+	//grid.draw_hex(50,50 + (Math.sin(Math.PI / 3) * 2 * HEX_RADIUS));
 });
