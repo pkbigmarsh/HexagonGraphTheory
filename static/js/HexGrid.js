@@ -1,6 +1,5 @@
 function HexGrid(parameters) {
-	parameters = default_arg(parameters, {});
-	this.ctx 			= default_arg(parameters.context, null);
+	parameters 			= default_arg(parameters, {});
 	this.origin			= default_arg(parameters.origin, null);
 	this.position 		= {
 		x: default_arg(parameters.x, 0),
@@ -16,105 +15,95 @@ function HexGrid(parameters) {
 
 	};
 
-	this.draw_hex = function(x, y, line_style)
+	this.create_hex = function(color)
 	{
-		line_style = default_arg(line_style, {});
-		if(this.ctx == null)
-			return false;
+		color = default_arg(color, "green");
 
+		var new_hex = new createjs.Shape();
+		var graphics = new_hex.graphics;
 		// --- Draw Hexagon Face --- //
-		this.ctx.beginPath();
-		this.ctx.lineWidth = default_arg(line_style.width, "1");
-		this.ctx.fillStyle = default_arg(line_style.style, "green");
-		this.ctx.lineStyle = default_arg(line_style.style, "black");
+		graphics.beginStroke("black");
+		graphics.setStrokeStyle(1);
+		graphics.beginFill(color);
 		var angle = 0;
 
-		this.ctx.moveTo(Math.cos(angle) * HEX_RADIUS + x, Math.sin(angle) * HEX_RADIUS + y);
-		for(var i = 0; i < 5; i ++)
+		graphics.moveTo(Math.cos(angle) * HEX_RADIUS, Math.sin(angle) * HEX_RADIUS);
+		for(var i = 0; i < 6; i ++)
 		{
 			angle += Math.PI / 3;
-			this.ctx.lineTo(Math.cos(angle) * HEX_RADIUS + x, Math.sin(angle) * HEX_RADIUS + y);
+			graphics.lineTo(Math.cos(angle) * HEX_RADIUS, Math.sin(angle) * HEX_RADIUS);
 		}
-		this.ctx.closePath();
-		this.ctx.fill();
-		this.ctx.stroke();
+		graphics.endStroke();
+		graphics.endFill();
 
 		// --- Draw South West Face --- //
 		points = [];
-		this.ctx.beginPath();
-		this.ctx.lineWidth = default_arg(line_style.width, "1");
-		this.ctx.fillStyle = default_arg(line_style.style, "brown");
-		this.ctx.lineStyle = default_arg(line_style.style, "black");
+		graphics.beginStroke("black");
+		graphics.setStrokeStyle(1);
+		graphics.beginFill("brown");
 
-		points[0] = { x: (x + HEX_RADIUS * Math.cos(Math.PI)),			y: y }; 
-		points[1] = { x: (x + HEX_RADIUS * Math.cos(2 * Math.PI / 3)),	y: y + HEX_RADIUS * Math.sin(2 * Math.PI / 3)};
+		points[0] = { x: (HEX_RADIUS * Math.cos(Math.PI)),			y: 0 }; 
+		points[1] = { x: (HEX_RADIUS * Math.cos(2 * Math.PI / 3)),	y: HEX_RADIUS * Math.sin(2 * Math.PI / 3)};
 		points[2] = { x: points[1].x,									y: points[1].y + HEX_BASE }; 
 		points[3] = { x: points[0].x,									y: points[0].y + HEX_BASE };
 
-		this.ctx.moveTo(points[0].x, points[0].y);
-		for(var i = 1; i < 4; i ++)
-			this.ctx.lineTo(points[i].x, points[i].y);
-		this.ctx.closePath();
-		this.ctx.fill();
-		this.ctx.stroke();
+		graphics.moveTo(points[0].x, points[0].y);
+		for(var i = 3; i >= 0; i --)
+			graphics.lineTo(points[i].x, points[i].y);
+		graphics.endStroke();
+		graphics.endFill();
 
 		// --- Draw South Face --- //
 		points = [];
-		this.ctx.beginPath();
-		this.ctx.lineWidth = default_arg(line_style.width, "1");
-		this.ctx.fillStyle = default_arg(line_style.style, "brown");
-		this.ctx.lineStyle = default_arg(line_style.style, "black");
+		graphics.beginStroke("black");
+		graphics.setStrokeStyle(1);
+		graphics.beginFill("brown");
 
-		points[0] = { x: (x + HEX_RADIUS * Math.cos(Math.PI / 3)),			y: y + HEX_RADIUS * Math.sin(Math.PI / 3) }; 
-		points[1] = { x: (x + HEX_RADIUS * Math.cos(2 * Math.PI / 3)),		y: y + HEX_RADIUS * Math.sin(2 * Math.PI / 3)};
+		points[0] = { x: (HEX_RADIUS * Math.cos(Math.PI / 3)),			y: HEX_RADIUS * Math.sin(Math.PI / 3) }; 
+		points[1] = { x: (HEX_RADIUS * Math.cos(2 * Math.PI / 3)),		y: HEX_RADIUS * Math.sin(2 * Math.PI / 3)};
 		points[2] = { x: points[1].x,										y: points[1].y + HEX_BASE }; 
 		points[3] = { x: points[0].x,										y: points[0].y + HEX_BASE };
 
-		this.ctx.moveTo(points[0].x, points[0].y);
-		for(var i = 1; i < 4; i ++)
-			this.ctx.lineTo(points[i].x, points[i].y);
-		this.ctx.closePath();
-		this.ctx.fill();
-		this.ctx.stroke();
+		graphics.moveTo(points[0].x, points[0].y);
+		for(var i = 3; i >= 0; i --)
+			graphics.lineTo(points[i].x, points[i].y);
+		graphics.endStroke();
+		graphics.endFill();
 
 		// --- Draw South East Face --- //
 		points = [];
-		this.ctx.beginPath();
-		this.ctx.lineWidth = default_arg(line_style.width, "1");
-		this.ctx.fillStyle = default_arg(line_style.style, "brown");
-		this.ctx.lineStyle = default_arg(line_style.style, "black");
+		graphics.beginStroke("black");
+		graphics.setStrokeStyle(1);
+		graphics.beginFill("brown");
 
-		points[0] = { x: (x + HEX_RADIUS),								y: y }; 
-		points[1] = { x: (x + HEX_RADIUS * Math.cos(Math.PI / 3)),		y: y + HEX_RADIUS * Math.sin(Math.PI / 3)};
+		points[0] = { x: (HEX_RADIUS),								y: 0 }; 
+		points[1] = { x: (HEX_RADIUS * Math.cos(Math.PI / 3)),		y: HEX_RADIUS * Math.sin(Math.PI / 3)};
 		points[2] = { x: points[1].x,									y: points[1].y + HEX_BASE }; 
 		points[3] = { x: points[0].x,									y: points[0].y + HEX_BASE };
 
-		this.ctx.moveTo(points[0].x, points[0].y);
-		for(var i = 1; i < 4; i ++)
-			this.ctx.lineTo(points[i].x, points[i].y);
-		this.ctx.closePath();
-		this.ctx.fill();
-		this.ctx.stroke();
+		graphics.moveTo(points[0].x, points[0].y);
+		for(var i = 3; i >= 0; i --)
+			graphics.lineTo(points[i].x, points[i].y);
+		graphics.endStroke();
+		graphics.endFill();
 
 		// --- Draw South Face --- //
 		points = [];
-		this.ctx.beginPath();
-		this.ctx.lineWidth = default_arg(line_style.width, "1");
-		this.ctx.fillStyle = default_arg(line_style.style, "brown");
-		this.ctx.lineStyle = default_arg(line_style.style, "black");
+		graphics.beginStroke("black");
+		graphics.setStrokeStyle(1);
+		graphics.beginFill("brown");
 
-		points[0] = { x: (x + HEX_RADIUS * Math.cos(Math.PI / 3)),			y: y + HEX_RADIUS * Math.sin(Math.PI / 3) }; 
-		points[1] = { x: (x + HEX_RADIUS * Math.cos(2 * Math.PI / 3)),		y: y + HEX_RADIUS * Math.sin(2 * Math.PI / 3)};
+		points[0] = { x: (HEX_RADIUS * Math.cos(Math.PI / 3)),			y: HEX_RADIUS * Math.sin(Math.PI / 3) }; 
+		points[1] = { x: (HEX_RADIUS * Math.cos(2 * Math.PI / 3)),		y: HEX_RADIUS * Math.sin(2 * Math.PI / 3)};
 		points[2] = { x: points[1].x,										y: points[1].y + HEX_BASE }; 
 		points[3] = { x: points[0].x,										y: points[0].y + HEX_BASE };
 
-		this.ctx.moveTo(points[0].x, points[0].y);
-		for(var i = 1; i < 4; i ++)
-			this.ctx.lineTo(points[i].x, points[i].y);
-		this.ctx.closePath();
-		this.ctx.fill();
-		this.ctx.stroke();
+		graphics.moveTo(points[0].x, points[0].y);
+		for(var i = 3; i >= 0; i --)
+			graphics.lineTo(points[i].x, points[i].y);
+		graphics.endStroke();
+		graphics.endFill();
 
-		return true;
+		return new_hex;
 	}
 }

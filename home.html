@@ -13,6 +13,7 @@
 	<link rel="stylesheet" href="static/css/border.css">
 
 	<!-- js -->
+	<script src="http://code.createjs.com/easeljs-0.6.0.min.js"></script>
 	<script src="static/js/vendor/custom.modernizr.js"></script>
 </head>
 <body>
@@ -88,10 +89,14 @@
 		</div>
 		<div class="row closed" style="height: 20%">
 			<div class="large-6 columns closed parent_height">
+				<canvas id="hex_canvas" width="500" height="100" style="margin: 0;">
 
+				</canvas>
 			</div>
 			<div class="large-6 columns closed parent_height">
+				<canvas id="hex_info_canvas" width="500" height="100" style="margin: 0;">
 
+				</canvas>
 			</div>
 		</div>
 	</div>
