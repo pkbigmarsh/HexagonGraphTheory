@@ -1,9 +1,9 @@
-var NN 						= 1;
-var NW 						= 2;
-var SW 						= 3;
-var SS 						= 4;
-var SE 						= 5;
-var NE 						= 6;
+var NN 						= 0;
+var NW 						= 1;
+var SW 						= 2;
+var SS 						= 3;
+var SE 						= 4;
+var NE 						= 5;
 
 var HEX_RADIUS 				= 30;
 var HEX_BASE 				= 15;
