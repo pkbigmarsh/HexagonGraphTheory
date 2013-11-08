@@ -79,6 +79,14 @@ function move_hex(event)
 		y += HEX_APOTHEM;
 	
 	placement_hex.set_pos({x: x, y: y});
+
+	main_stage.sortChildren(function(child1, child2){
+		if(child1.y < child2.y)
+			return -1;
+		if(child1.y > child2.y)
+			return 1;
+		return 0;
+	});
 }
 
 function place_hex(event)
