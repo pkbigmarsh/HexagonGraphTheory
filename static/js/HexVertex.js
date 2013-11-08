@@ -87,23 +87,6 @@ function HexVertex(parameters){
 			this.graphics.lineTo(points[i].x, points[i].y);
 		this.graphics.endStroke();
 		this.graphics.endFill();
-
-		// --- Draw South Face --- //
-		points = [];
-		this.graphics.beginStroke("black");
-		this.graphics.setStrokeStyle(1);
-		this.graphics.beginFill("brown");
-
-		points[0] = { x: (HEX_RADIUS * Math.cos(Math.PI / 3)),			y: HEX_RADIUS * Math.sin(Math.PI / 3) }; 
-		points[1] = { x: (HEX_RADIUS * Math.cos(2 * Math.PI / 3)),		y: HEX_RADIUS * Math.sin(2 * Math.PI / 3)};
-		points[2] = { x: points[1].x,										y: points[1].y + HEX_BASE }; 
-		points[3] = { x: points[0].x,										y: points[0].y + HEX_BASE };
-
-		this.graphics.moveTo(points[0].x, points[0].y);
-		for(var i = 3; i >= 0; i --)
-			this.graphics.lineTo(points[i].x, points[i].y);
-		this.graphics.endStroke();
-		this.graphics.endFill();
 	}
 
 	this.addEventListener = function(event_str, event_function) {

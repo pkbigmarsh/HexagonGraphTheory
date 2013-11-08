@@ -67,15 +67,17 @@ function move_hex(event)
 	var x = event.stageX;
 	var y = event.stageY;
 
-	var row 	= truncate(y / HEX_APOTHEM);
-	var colum 	= truncate(x / HEX_APOTHEM);
+	var x_dis = HEX_RADIUS * 1.5;
+	var y_dis = HEX_APOTHEM * 2;
 
-	x = colum * HEX_APOTHEM;
-	y = row * HEX_APOTHEM;
+	var colum = truncate(x / x_dis);
+	var row = truncate(y / y_dis);
 
+	x = colum * x_dis;
+	y = row * y_dis;
 	if(colum % 2 == 1)
-		y += HEX_APOTHEM / 2;
-
+		y += HEX_APOTHEM;
+	
 	placement_hex.set_pos({x: x, y: y});
 }
 
