@@ -195,5 +195,13 @@ function HexVertex(parameters){
 		}
 	};
 
+	this.place_above = function(new_hex) {
+		new_hex.height += 1;
+		if(this.above == null)
+			this.above = new_hex;
+		else
+			this.above.place_above(new_hex);
+	};
+
 	this.create_hex(parameters.color);
 }
