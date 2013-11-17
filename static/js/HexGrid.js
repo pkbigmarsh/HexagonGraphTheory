@@ -11,99 +11,129 @@ function HexGrid(parameters) {
 	this.hexes 			= default_arg(parameters.hexes, []);
 	this.parent 		= default_arg(parameters.parent, []);
 
-	this.add_hex = function(new_hex, connecting_hex, direction) {
+	this.add_hex_with_connection = function(new_hex, connecting_hex, direction_c_to_n) {
+		if(this.origin == null && typeof connecting_hex == 'undefined')
+		{
+			this.origin = new_hex;
+			this.hexes.push(new_hex);
+			this.num_vertices ++;
+			this.position = new_hex.get_pos();
+			return true;
+		}
+		else if(typeof connecting_hex == 'undefined')
+			return false;
 
+		this.hexes.push(new_hex);
+		this.num_vertices ++;
+		connecting_hex.neighbors[direction_c_to_n] = new_hex;
+		new_hex.neighbors[(direction_c_to_n + 3) % 6] = connecting_hex;
+		return true;
 	};
 
-	this.create_hex = function(color)
-	{
-		color = default_arg(color, "green");
-
-		var new_hex = new createjs.Shape();
-		var graphics = new_hex.graphics;
-		// --- Draw Hexagon Face --- //
-		graphics.beginStroke("black");
-		graphics.setStrokeStyle(1);
-		graphics.beginFill(color);
-		var angle = 0;
-
-		graphics.moveTo(Math.cos(angle) * HEX_RADIUS, Math.sin(angle) * HEX_RADIUS);
-		for(var i = 0; i < 6; i ++)
+	this.add_hex = function(new_hex) {
+		if(this.origin == null)
 		{
-			angle += Math.PI / 3;
-			graphics.lineTo(Math.cos(angle) * HEX_RADIUS, Math.sin(angle) * HEX_RADIUS);
+			this.origin = new_hex;
+			this.hexes.push(new_hex);
+			this.num_vertices ++;
+			this.position = new_hex.get_pos();
+			return true;
 		}
-		graphics.endStroke();
-		graphics.endFill();
 
-		// --- Draw South West Face --- //
-		points = [];
-		graphics.beginStroke("black");
-		graphics.setStrokeStyle(1);
-		graphics.beginFill("brown");
+		var connection_info = this.get_closest_hex_and_direction(new_hex);
+		this.hexes.push(new_hex);
+		this.num_vertices ++;
+		if(typeof connection_info.close_hex != 'undefined')
+		{
+			connection_info.close_hex[connection_info.direction] = new_hex;
+			new_hex[opposite_direction(connection_info.direction)] = connection_info.close_hex;
+		}
+		else
+		{
+			connection_info.left.neighbors[connection_info.direction] = new_hex;
+			new_hex.neighbors[opposite_direction(connection_info).direction];
+		}
+		return true;
+	};
 
-		points[0] = { x: (HEX_RADIUS * Math.cos(Math.PI)),			y: 0 }; 
-		points[1] = { x: (HEX_RADIUS * Math.cos(2 * Math.PI / 3)),	y: HEX_RADIUS * Math.sin(2 * Math.PI / 3)};
-		points[2] = { x: points[1].x,									y: points[1].y + HEX_BASE }; 
-		points[3] = { x: points[0].x,									y: points[0].y + HEX_BASE };
+	this.get_closest_hex_and_direction = function(new_hex) {
+		if(this.origin == null || this.num_vertices == 0 || typeof position == 'undefined')
+		{
+			throw_error("find_hex_by_position", "Graph does not have an origin or position was not given", position);
+			return null;
+		}	
 
-		graphics.moveTo(points[0].x, points[0].y);
-		for(var i = 3; i >= 0; i --)
-			graphics.lineTo(points[i].x, points[i].y);
-		graphics.endStroke();
-		graphics.endFill();
+		position.x = default_arg(position.x, 0);
+		position.y = default_arg(position.y, 0);
 
-		// --- Draw South Face --- //
-		points = [];
-		graphics.beginStroke("black");
-		graphics.setStrokeStyle(1);
-		graphics.beginFill("brown");
+		var current_hex = this.origin;
+		var current_pos = current_hex.get_pos();
+		var direction;
+		var dir_check;
+		while(current_hex != null && !(current_pos.x == position.x && current_pos.y == position.y))
+		{
+			direction = current_hex.get_direction_to_point(position);
+			
+			if(current_hex.neighbors[direction] == null)
+			{
+				return {
+					direction: direction,
+					close_hex: current_hex
+				};
+			}
 
-		points[0] = { x: (HEX_RADIUS * Math.cos(Math.PI / 3)),			y: HEX_RADIUS * Math.sin(Math.PI / 3) }; 
-		points[1] = { x: (HEX_RADIUS * Math.cos(2 * Math.PI / 3)),		y: HEX_RADIUS * Math.sin(2 * Math.PI / 3)};
-		points[2] = { x: points[1].x,										y: points[1].y + HEX_BASE }; 
-		points[3] = { x: points[0].x,										y: points[0].y + HEX_BASE };
+			current_hex = current_hex.neighbors[direction];
+			dir_check = current_hex.get_direction_to_point(position);
+			if(direction == opposite_direction(dir_check))
+			{
+				return {
+					left_hex: current_hex,
+					direction: direction,
+					right_hex: current_hex.neighbors[direction]
+				};
+			}
 
-		graphics.moveTo(points[0].x, points[0].y);
-		for(var i = 3; i >= 0; i --)
-			graphics.lineTo(points[i].x, points[i].y);
-		graphics.endStroke();
-		graphics.endFill();
+			current_pos = current_hex.get_pos();
+		}
+	};
 
-		// --- Draw South East Face --- //
-		points = [];
-		graphics.beginStroke("black");
-		graphics.setStrokeStyle(1);
-		graphics.beginFill("brown");
+	this.find_hex_by_position = function(position) {
+		if(this.origin == null || this.num_vertices == 0 || typeof position == 'undefined')
+		{
+			throw_error("find_hex_by_position", "Graph does not have an origin or position was not given", position);
+			return null;
+		}	
 
-		points[0] = { x: (HEX_RADIUS),								y: 0 }; 
-		points[1] = { x: (HEX_RADIUS * Math.cos(Math.PI / 3)),		y: HEX_RADIUS * Math.sin(Math.PI / 3)};
-		points[2] = { x: points[1].x,									y: points[1].y + HEX_BASE }; 
-		points[3] = { x: points[0].x,									y: points[0].y + HEX_BASE };
+		position.x = default_arg(position.x, 0);
+		position.y = default_arg(position.y, 0);
 
-		graphics.moveTo(points[0].x, points[0].y);
-		for(var i = 3; i >= 0; i --)
-			graphics.lineTo(points[i].x, points[i].y);
-		graphics.endStroke();
-		graphics.endFill();
+		var current_hex = this.origin;
+		var current_pos = current_hex.get_pos();
+		var direction;
+		var dir_check;
+		while(current_hex != null && !(current_pos.x == position.x && current_pos.y == position.y))
+		{
+			direction = current_hex.get_direction_to_point(position);
+			
+			if(current_hex.neighbors[direction] == null)
+			{
+				throw_error("find_hex_by_position", "Target point is not on a hex in the graph. Edge reached", {position: position, edge: current_hex});
+				return null;
+			}
 
-		// --- Draw South Face --- //
-		points = [];
-		graphics.beginStroke("black");
-		graphics.setStrokeStyle(1);
-		graphics.beginFill("brown");
+			current_hex = current_hex.neighbors[direction];
+			dir_check = current_hex.get_direction_to_point(position);
+			if(direction == opposite_direction(dir_check))
+			{
+				throw_error("find_hex_by_position", "Target point is not on a hex in the graph", position);
+				return null;
+			}
 
-		points[0] = { x: (HEX_RADIUS * Math.cos(Math.PI / 3)),			y: HEX_RADIUS * Math.sin(Math.PI / 3) }; 
-		points[1] = { x: (HEX_RADIUS * Math.cos(2 * Math.PI / 3)),		y: HEX_RADIUS * Math.sin(2 * Math.PI / 3)};
-		points[2] = { x: points[1].x,										y: points[1].y + HEX_BASE }; 
-		points[3] = { x: points[0].x,										y: points[0].y + HEX_BASE };
+			current_pos = current_hex.get_pos();
+		}
 
-		graphics.moveTo(points[0].x, points[0].y);
-		for(var i = 3; i >= 0; i --)
-			graphics.lineTo(points[i].x, points[i].y);
-		graphics.endStroke();
-		graphics.endFill();
+		return current_hex;
+	};
 
-		return new_hex;
-	}
+	
 }

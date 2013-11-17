@@ -93,6 +93,6 @@ function place_hex(event)
 {
 	main_stage.removeEventListener("stagemousemove", move_hex);
 	main_stage.removeEventListener("stagemousedown", place_hex);
-
+	grid.add_hex(placement_hex);
 	placement_hex = null;
 }

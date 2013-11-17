@@ -171,7 +171,7 @@ function HexVertex(parameters){
 			throw_error("get_direction_to_hex", "Given Hex is empty", other_hex);
 			return null;
 		}
-		other_hex = other_hex.get_bottom();
+		other_hex = other_hex.get_bottom();	
 		var start_pos = this.get_pos();
 		var end_pos = other_hex.get();
 
