@@ -1,4 +1,4 @@
-function HexGrid(parameters) {
+function HexGraph(parameters) {
 	parameters 			= default_arg(parameters, {});
 	this.origin			= default_arg(parameters.origin, null);
 	this.position 		= {
@@ -11,25 +11,6 @@ function HexGrid(parameters) {
 	this.hexes 			= default_arg(parameters.hexes, []);
 	this.parent 		= default_arg(parameters.parent, []);
 
-	this.add_hex_with_connection = function(new_hex, connecting_hex, direction_c_to_n) {
-		if(this.origin == null && typeof connecting_hex == 'undefined')
-		{
-			this.origin = new_hex;
-			this.hexes.push(new_hex);
-			this.num_vertices ++;
-			this.position = new_hex.get_pos();
-			return true;
-		}
-		else if(typeof connecting_hex == 'undefined')
-			return false;
-
-		this.hexes.push(new_hex);
-		this.num_vertices ++;
-		connecting_hex.neighbors[direction_c_to_n] = new_hex;
-		new_hex.neighbors[(direction_c_to_n + 3) % 6] = connecting_hex;
-		return true;
-	};
-
 	this.add_hex = function(new_hex) {
 		if(this.origin == null)
 		{
@@ -40,61 +21,51 @@ function HexGrid(parameters) {
 			return true;
 		}
 
-		var connection_info = this.get_closest_hex_and_direction(new_hex);
+		var connecting_hexes = this.get_connections(new_hex);
 		this.hexes.push(new_hex);
 		this.num_vertices ++;
-		if(typeof connection_info.close_hex != 'undefined')
+		
+		for(var current_direction = NN; current_direction <= NE; current_direction ++)
 		{
-			connection_info.close_hex[connection_info.direction] = new_hex;
-			new_hex[opposite_direction(connection_info.direction)] = connection_info.close_hex;
+			if(connecting_hexes[current_direction] != undefined)
+			{
+				new_hex.add_connection(current_direction, connecting_hexes[current_direction]);
+			}
 		}
-		else
-		{
-			connection_info.left.neighbors[connection_info.direction] = new_hex;
-			new_hex.neighbors[opposite_direction(connection_info).direction];
-		}
+
 		return true;
 	};
 
-	this.get_closest_hex_and_direction = function(new_hex) {
+	this.get_connections = function(hex) {
 		if(this.origin == null || this.num_vertices == 0 || typeof position == 'undefined')
 		{
 			throw_error("find_hex_by_position", "Graph does not have an origin or position was not given", position);
 			return null;
 		}	
 
-		position.x = default_arg(position.x, 0);
-		position.y = default_arg(position.y, 0);
+		info = [];
 
-		var current_hex = this.origin;
-		var current_pos = current_hex.get_pos();
-		var direction;
-		var dir_check;
-		while(current_hex != null && !(current_pos.x == position.x && current_pos.y == position.y))
+		for(var current_direction = NN; current_direction <= NE; current_direction ++)
 		{
-			direction = current_hex.get_direction_to_point(position);
-			
-			if(current_hex.neighbors[direction] == null)
+			for(var j = 0; j < this.hexes.length; j ++)
 			{
-				return {
-					direction: direction,
-					close_hex: current_hex
-				};
+				var test_hex = this.hexes[j];
+				if(hex.get_direction_to_hex(test_hex) == current_direction)
+				{
+					if(info[current_direction] == undefined)
+						info[current_direction] = test_hex;
+					else
+					{
+						var distance_to_current = hex.get_distance(info[current_direction]);
+						var distance_to_new     = hex.get_distance(test_hex);
+						if(distance_to_new < distance_to_current)
+							info[current_direction] = test_hex;
+					}
+				}
 			}
-
-			current_hex = current_hex.neighbors[direction];
-			dir_check = current_hex.get_direction_to_point(position);
-			if(direction == opposite_direction(dir_check))
-			{
-				return {
-					left_hex: current_hex,
-					direction: direction,
-					right_hex: current_hex.neighbors[direction]
-				};
-			}
-
-			current_pos = current_hex.get_pos();
 		}
+
+		return info;
 	};
 
 	this.find_hex_by_position = function(position) {

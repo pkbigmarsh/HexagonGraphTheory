@@ -2,7 +2,7 @@ var main_stage;
 var hex_select_stage;
 var hex_info_stage;
 
-var grid;
+var graph;
 var hex_button_simple;
 var hex_button_medium;
 var hex_button_hard;
@@ -12,7 +12,7 @@ var current_bottom_hex;
 var placed_hexs = [];
 
 $(document).ready(function() {
-		main_stage 			= new createjs.Stage("grid_canvas");
+		main_stage 			= new createjs.Stage("graph_canvas");
 		hex_select_stage 	= new createjs.Stage("hex_canvas");
 		hex_info_stage 		= new createjs.Stage("hex_info_canvas");
 
@@ -23,7 +23,7 @@ $(document).ready(function() {
 			hex_info_stage.update();
 		});
 
-		grid = new HexGrid();
+		graph = new HexGraph();
 		hex_button_simple 	= new HexVertex({color: "green"});
 		hex_button_medium 	= new HexVertex({color: createjs.Graphics.getRGB(138, 86, 57)});
 		hex_button_hard		= new HexVertex({color: createjs.Graphics.getRGB(155, 00, 00)});
@@ -130,7 +130,7 @@ function place_hex(event)
 	main_stage.removeEventListener("stagemousemove", move_hex);
 	main_stage.removeEventListener("stagemousedown", place_hex);
 	// Come back to this.
-	//grid.add_hex(current_hex);
+	//graph.add_hex(current_hex);
 
 	if(current_bottom_hex == null)
 	{
@@ -143,4 +143,13 @@ function place_hex(event)
 
 	current_bottom_hex = null;
 	current_hex = null;
+}
+
+function place_placed_hexes_into_graph(origin)
+{
+	graph = new HexGraph();
+	origin = default_arg(origin, null);
+	graph.origin = null;
+	for(var i = 0; i < placed_hexs.length; i ++)
+		graph.add_hex(origin[i]);
 }

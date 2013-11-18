@@ -32,6 +32,13 @@ function HexVertex(parameters){
 		return {x: this.shape.x, y: this.shape.y};
 	};
 
+	this.get_distance = function(other_hex) {
+		var o_pos = other_hex.get_pos();
+		var t_pos = this.get_pos();
+
+		return Math.sqrt(Math.pow(o_pos.x - t_pos.x, 2) + Math.pow(o_pos.y - t_pos.y, 2));
+	};
+
 	this.get_top = function() {
 		var current_hex = this;
 		while(current_hex.above != null)
@@ -205,6 +212,12 @@ function HexVertex(parameters){
 		else
 			this.above.place_above(new_hex);
 	};
+
+	this.add_connection = function(direction, new_hex)
+	{
+		this.neighbors[direction] = new_hex;
+		new_hex.neighbors[opposite_direction(direction)] = this;
+	}
 
 	this.create_hex(parameters.color);
 }

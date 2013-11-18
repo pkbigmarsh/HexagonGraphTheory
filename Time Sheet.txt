@@ -1,4 +1,4 @@
 11/17/2013
-	4:00pm - 
+	4:00pm - 6:00pm
 		Placing hexes appropriatly
-		
+		Creating the graph
