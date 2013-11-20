@@ -7,6 +7,7 @@ function HexVertex(parameters){
 	this.neighbors 		= default_arg(parameters.neighbors, [null, null, null, null, null, null]);
 	this.below 			= default_arg(parameters.below, null);
 	this.terrain 		= default_arg(parameters.terrain, TERRAIN_EASY);
+	this.color 			= default_arg(parameters.color, HEX_GREEN);
 
 	this.set_x = function(new_x) {
 		this.shape.x = new_x;
@@ -54,8 +55,33 @@ function HexVertex(parameters){
 		return current_hex;
 	}
 
+	this.highlight = function(color)
+	{
+		color = default_arg(color, "yellow");
+		// --- Draw Hexagon Face --- //
+		this.graphics.beginStroke(color);
+		this.graphics.setStrokeStyle(3);
+		var angle = 0;
+
+		this.graphics.moveTo(Math.cos(angle) * HEX_RADIUS, Math.sin(angle) * HEX_RADIUS);
+		for(var i = 0; i < 6; i ++)
+		{
+			angle += Math.PI / 3;
+			this.graphics.lineTo(Math.cos(angle) * HEX_RADIUS, Math.sin(angle) * HEX_RADIUS);
+		}
+		this.graphics.endStroke();
+	}
+
+	this.unHighlight = function()
+	{
+		this.create_hex(this.color);
+	}
+
 	this.create_hex = function(color)
 	{
+		this.graphics.clear();
+
+
 		color = default_arg(color, "green");
 
 		// --- Draw Hexagon Face --- //
@@ -214,10 +240,16 @@ function HexVertex(parameters){
 			this.above.place_above(new_hex);
 	};
 
-	this.add_connection = function(direction, new_hex)
-	{
+	this.add_connection = function(direction, new_hex) {
 		this.neighbors[direction] = new_hex;
 		new_hex.neighbors[opposite_direction(direction)] = this;
+	}
+
+	this.hitTest = function(point) {
+		if( typeof point.x == "undefined" ||  typeof point.y == "undefined")
+			return false;
+
+		return this.shape.hitTest(point.x, point.y);
 	}
 
 	this.create_hex(parameters.color);

@@ -9,7 +9,7 @@ var hex_button_hard;
 
 var current_hex;
 var current_bottom_hex;
-var placed_hexs = [];
+var placed_hexes = [];
 
 $(document).ready(function() {
 		main_stage 			= new createjs.Stage("grid_canvas");
@@ -85,13 +85,13 @@ function move_hex(event)
 
 	// adjust height for overlap
 	current_bottom_hex = null;
-	for(var i = 0; i < placed_hexs.length && current_bottom_hex == null; i ++)
+	for(var i = 0; i < placed_hexes.length && current_bottom_hex == null; i ++)
 	{
-		var test_point = main_stage.localToLocal(event.stageX, event.stageY, placed_hexs[i].shape)
-		var test_hex = placed_hexs[i].get_top();
+		var test_point = main_stage.localToLocal(event.stageX, event.stageY, placed_hexes[i].shape)
+		var test_hex = placed_hexes[i].get_top();
 		if(test_hex.shape.hitTest(test_point.x, test_point.y))
 		{
-			current_bottom_hex = placed_hexs[i].get_bottom();
+			current_bottom_hex = placed_hexes[i].get_bottom();
 			var top = current_bottom_hex.get_top();
 			var height = top.height + 1;
 			y = current_bottom_hex.get_y() - HEX_BASE * height;
@@ -101,8 +101,8 @@ function move_hex(event)
 		}
 	}
 
-	placed_hexs.push(current_hex);
-	placed_hexs.sort(function(hex1, hex2) {
+	placed_hexes.push(current_hex);
+	placed_hexes.sort(function(hex1, hex2) {
 		if(hex1.height < hex2.height)
 			return -1;
 		if(hex1.get_y() < hex2.get_y())
@@ -112,16 +112,16 @@ function move_hex(event)
 		return 0;
 	});
 	main_stage.removeAllChildren;
-	for(var i = 0; i < placed_hexs.length; i ++)
+	for(var i = 0; i < placed_hexes.length; i ++)
 	{
-		current = placed_hexs[i];
+		current = placed_hexes[i];
 		while(current != null)
 		{
 			main_stage.addChild(current.shape);
 			current = current.above;
 		}
 	}
-	placed_hexs.splice(placed_hexs.indexOf(current_hex), 1);
+	placed_hexes.splice(placed_hexes.indexOf(current_hex), 1);
 	current_hex.height = 0;
 }
 
@@ -134,7 +134,7 @@ function place_hex(event)
 
 	if(current_bottom_hex == null)
 	{
-		placed_hexs.push(current_hex);
+		placed_hexes.push(current_hex);
 	}
 	else
 	{
@@ -150,6 +150,6 @@ function place_placed_hexes_into_graph(origin)
 	graph = new HexGraph();
 	origin = default_arg(origin, null);
 	graph.origin = null;
-	for(var i = 0; i < placed_hexs.length; i ++)
+	for(var i = 0; i < placed_hexes.length; i ++)
 		graph.add_hex(origin[i]);
 }
