@@ -3,7 +3,7 @@ var current_highlighted = null;
 
 var prims_info = "<p style='margin: 3px;'>Please click to select a hex as the origin for the minimum spanning tree. After that hit start.</p></br>";
 var prims_button = '<a style="margin: 3px;" class="button" id="prim_start">Start</a>';
-
+var placed_edges = [];
 
 $("#prims_button").on("click", function() {
 	$("#info_panel").html(prims_info + prims_button);
@@ -45,5 +45,40 @@ function start()
 	$("#info_panel").html("");
 
 	place_placed_hexes_into_graph(current_highlighted);
-	console.log(graph.toString());
+	graph.clean();
+	prims();
+	//console.log(graph.toString());
+}
+
+function prims()
+{
+	var edges = [];
+	placed_edges = [];
+	var new_edges = graph.get_edges(graph.origin);
+	graph.hex_visited[graph.origin.graph_index] = true;
+	edges = edges.concat(new_edges);
+	while(edges.length != 0)
+	{
+		var min = 9999999;
+		var min_edge = null;
+		var min_pos = -1;
+		for(var i = 0; i < edges.length; i ++)
+		{
+			if(edges[i].distance < min)
+			{
+				min_edge = edges[i];
+				min = edges[i].distance;
+				min_pos = i;
+			}
+		}
+
+		edges.splice(min_pos, 1);
+		graph.hex_visited[min_edge.to.graph_index] = true;
+		new_edges = graph.get_edges(min_edge.to);
+		edges = edges.concat(new_edges);
+		placed_edges.push(min_edge);
+		min_edge.draw();
+		main_stage.addChild(min_edge.shape);
+		console.log(min_edge.toString());
+	}
 }

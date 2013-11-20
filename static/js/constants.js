@@ -18,6 +18,6 @@ var HEX_RED 				= createjs.Graphics.getRGB(155, 000, 000);
 var HEX_GREEN 				= createjs.Graphics.getRGB(000, 155, 000);
 
 // Terrain
-var TERRAIN_EASY 			= 1;
-var TERRAIN_MEDIUM 			= 2;
-var TERRAIN_HARD			= 3;
+var TERRAIN_EASY 			= 0;
+var TERRAIN_MEDIUM 			= 1;
+var TERRAIN_HARD			= 2;

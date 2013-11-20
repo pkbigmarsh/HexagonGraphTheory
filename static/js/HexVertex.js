@@ -8,6 +8,7 @@ function HexVertex(parameters){
 	this.below 			= default_arg(parameters.below, null);
 	this.terrain 		= default_arg(parameters.terrain, TERRAIN_EASY);
 	this.color 			= default_arg(parameters.color, HEX_GREEN);
+	this.graph_index 	= -1;
 
 	this.set_x = function(new_x) {
 		this.shape.x = new_x;
@@ -223,7 +224,7 @@ function HexVertex(parameters){
 			if(start_pos.x > end_pos.x)
 				return SE;
 			else if(start_pos.x == end_pos.x)
-				return SN;
+				return SS;
 			else
 				return SW;
 		}

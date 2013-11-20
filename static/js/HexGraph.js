@@ -11,6 +11,37 @@ function HexGraph(parameters) {
 	this.hexes 			= default_arg(parameters.hexes, []);
 	this.parent 		= default_arg(parameters.parent, []);
 
+	this.clean = function() {
+		this.hex_visited = [];
+		this.parent = [];
+		for(var i = 0; i < this.num_vertices; i ++)
+		{
+			this.hexes[i].graph_index = i;
+			this.parent.push(i);
+			this.hex_visited.push(false);
+		}
+	};
+
+	this.get_edges = function(hex) {
+		var edges = [];
+		for(var i = NN; i <= NW; i ++)
+		{
+			if(hex.neighbors[i] != null)
+			{
+				var index = hex.neighbors[i].graph_index;
+				if(!this.hex_visited[index])
+				{
+					var edge = new HexEdge();
+					edge.from = hex;
+					edge.to = hex.neighbors[i];
+					edge.calculate_distance();
+					edges.push(edge);
+				}
+			}
+		}
+		return edges;
+	};
+
 	this.add_hex = function(new_hex) {
 		if(this.origin == null)
 		{
