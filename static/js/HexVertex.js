@@ -6,6 +6,7 @@ function HexVertex(parameters){
 	this.height 		= default_arg(parameters.height, 0);
 	this.neighbors 		= default_arg(parameters.neighbors, [null, null, null, null, null, null]);
 	this.below 			= default_arg(parameters.below, null);
+	this.terrain 		= default_arg(parameters.terrain, TERRAIN_EASY);
 
 	this.set_x = function(new_x) {
 		this.shape.x = new_x;
@@ -220,4 +221,13 @@ function HexVertex(parameters){
 	}
 
 	this.create_hex(parameters.color);
+};
+
+HexVertex.prototype.toString = function()
+{
+    return {
+    	height: this.height,
+    	terrain: this.terrain,
+    	neighbors: this.neighbors
+    };
 }

@@ -12,7 +12,7 @@ var current_bottom_hex;
 var placed_hexs = [];
 
 $(document).ready(function() {
-		main_stage 			= new createjs.Stage("graph_canvas");
+		main_stage 			= new createjs.Stage("grid_canvas");
 		hex_select_stage 	= new createjs.Stage("hex_canvas");
 		hex_info_stage 		= new createjs.Stage("hex_info_canvas");
 
@@ -24,29 +24,29 @@ $(document).ready(function() {
 		});
 
 		graph = new HexGraph();
-		hex_button_simple 	= new HexVertex({color: "green"});
-		hex_button_medium 	= new HexVertex({color: createjs.Graphics.getRGB(138, 86, 57)});
-		hex_button_hard		= new HexVertex({color: createjs.Graphics.getRGB(155, 00, 00)});
+		hex_button_simple 	= new HexVertex({color: HEX_GREEN});
+		hex_button_medium 	= new HexVertex({color: HEX_BROWN});
+		hex_button_hard		= new HexVertex({color: HEX_RED});
 
 
 		hex_button_simple.set_x(HEX_RADIUS * 2);
 		hex_button_simple.set_y(50);
 		hex_button_simple.addEventListener("click", function() {
-			add_new_hex(hex_button_simple.clone());
+			add_new_hex(new HexVertex({color: HEX_GREEN, terrain: TERRAIN_EASY}));
 		});
 		hex_select_stage.addChild(hex_button_simple.shape);
 
 		hex_button_medium.set_x(HEX_RADIUS * 5);
 		hex_button_medium.set_y(50);
 		hex_button_medium.addEventListener("click", function() {
-			add_new_hex(hex_button_medium.clone());
+			add_new_hex(new HexVertex({color: HEX_BROWN, terrain: TERRAIN_MEDIUM}));
 		});
 		hex_select_stage.addChild(hex_button_medium.shape);
 
 		hex_button_hard.set_x(HEX_RADIUS * 8);
 		hex_button_hard.set_y(50);
 		hex_button_hard.addEventListener("click", function() {
-			add_new_hex(hex_button_hard.clone());
+			add_new_hex(new HexVertex({color: HEX_RED, terrain: TERRAIN_HARD}));
 		});
 		hex_select_stage.addChild(hex_button_hard.shape);
 
