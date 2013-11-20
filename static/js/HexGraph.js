@@ -37,17 +37,16 @@ function HexGraph(parameters) {
 	};
 
 	this.get_connections = function(hex) {
-		if(this.origin == null || this.num_vertices == 0 || typeof position == 'undefined')
+		if(this.num_vertices == 0)
 		{
-			throw_error("find_hex_by_position", "Graph does not have an origin or position was not given", position);
+			throw_error("get_connections", "Graph does not have any hexes in graph");
 			return null;
 		}	
 
 		info = [];
-
 		for(var current_direction = NN; current_direction <= NE; current_direction ++)
 		{
-			for(var j = 0; j < this.hexes.length; j ++)
+			for(var j = 0; j < this.num_vertices; j ++)
 			{
 				var test_hex = this.hexes[j];
 				if(hex.get_direction_to_hex(test_hex) == current_direction)
@@ -105,6 +104,9 @@ function HexGraph(parameters) {
 
 		return current_hex;
 	};
+}
 
-	
+HexGraph.prototype.toString = function()
+{
+	return this.origin.toString();
 }

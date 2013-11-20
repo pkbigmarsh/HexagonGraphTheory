@@ -148,8 +148,10 @@ function place_hex(event)
 function place_placed_hexes_into_graph(origin)
 {
 	graph = new HexGraph();
-	origin = default_arg(origin, null);
-	graph.origin = null;
+	graph.add_hex(origin);
 	for(var i = 0; i < placed_hexes.length; i ++)
-		graph.add_hex(origin[i]);
+	{
+		if(placed_hexes[i] != origin)
+			graph.add_hex(placed_hexes[i]);
+	}
 }

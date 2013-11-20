@@ -207,7 +207,7 @@ function HexVertex(parameters){
 		}
 		other_hex = other_hex.get_bottom();	
 		var start_pos = this.get_pos();
-		var end_pos = other_hex.get();
+		var end_pos = other_hex.get_pos();
 
 		if(start_pos.y > end_pos.y)
 		{
