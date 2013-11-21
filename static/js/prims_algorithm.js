@@ -55,8 +55,11 @@ function prims()
 	var edges = [];
 	placed_edges = [];
 	var new_edges = graph.get_edges(graph.origin);
+	console.log(graph.origin.toString());
+	graph.clean();
 	graph.hex_visited[graph.origin.graph_index] = true;
 	edges = edges.concat(new_edges);
+	var edge_count = 1;
 	while(edges.length != 0)
 	{
 		var min = 9999999;
@@ -64,7 +67,8 @@ function prims()
 		var min_pos = -1;
 		for(var i = 0; i < edges.length; i ++)
 		{
-			if(edges[i].distance < min)
+			var to_index = edges[i].to.graph_index;
+			if(edges[i].distance < min && !graph.hex_visited[to_index])
 			{
 				min_edge = edges[i];
 				min = edges[i].distance;
@@ -77,8 +81,9 @@ function prims()
 		new_edges = graph.get_edges(min_edge.to);
 		edges = edges.concat(new_edges);
 		placed_edges.push(min_edge);
-		min_edge.draw();
+		min_edge.draw("black", edge_count);
+		edge_count ++;
 		main_stage.addChild(min_edge.shape);
-		console.log(min_edge.toString());
+		main_stage.addChild(min_edge.text);
 	}
 }

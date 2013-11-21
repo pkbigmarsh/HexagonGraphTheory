@@ -189,7 +189,7 @@ function HexVertex(parameters){
 			else
 				return NN;
 		}
-		else
+		else if(start_pos.y < end_pos.y)
 		{
 			if(end_pos.x < vertical_bounds.left)
 				return SE;
@@ -198,6 +198,8 @@ function HexVertex(parameters){
 			else
 				return SS;
 		}
+		else
+			return -1;
 	};
 
 	this.get_direction_to_hex = function(other_hex) {
@@ -219,7 +221,7 @@ function HexVertex(parameters){
 			else
 				return NW;
 		}
-		else
+		else if(start_pos.y < end_pos.y)
 		{
 			if(start_pos.x > end_pos.x)
 				return SE;
@@ -228,6 +230,8 @@ function HexVertex(parameters){
 			else
 				return SW;
 		}
+		else 
+			return -1;
 	};
 
 	this.place_above = function(new_hex) {

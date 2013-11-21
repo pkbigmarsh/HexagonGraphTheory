@@ -20,14 +20,24 @@ function HexEdge(parameters) {
 		return true;
 	}
 
-	this.draw = function(color) {
+	this.draw = function(color, num) {
 		this.set_pos();
-		console.log(this.get_x(), this.get_y());
 		color = default_arg(color, "black");
+		num = default_arg(num, 0);
+		this.text = new createjs.Text(num, "20px Arial", "#0000FF");
 		var dx = this.from.get_x() - this.to.get_x();
 		var dy = this.from.get_y() - this.to.get_y();
 		var radius = this.from.get_distance(this.to) * .9;
-		var angle = Math.tan(dy / dx);
+		var angle = 0;
+		if(dx == 0)
+		{
+			if(dy > 0)
+				angle = Math.PI * 3 / 2;
+			else
+				angle = Math.PI / 2;
+		}
+		else
+			angle = Math.tan(dy / dx);
 		var point_x = Math.cos(angle) * radius;
 		var point_y = Math.sin(angle) * radius;
 
@@ -38,6 +48,15 @@ function HexEdge(parameters) {
 		this.graphics.moveTo(0, 0);
 		this.graphics.lineTo(point_x, point_y);
 		this.graphics.endStroke();
+
+		radius = radius / 4 * 3;
+		angle -= .5;
+
+		this.text.y = this.get_y();
+		this.text.x = this.get_x();
+
+		this.text.y += Math.sin(angle) * radius;
+		this.text.x += Math.cos(angle) * radius;
 	}
 
 	this.set_pos = function() {
@@ -78,5 +97,7 @@ HexEdge.prototype.toString = function()
 		from: this.from.toString(),
 		to: this.to.toString(),
 		distance: this.distance,
+		x: this.get_x(),
+		y: this.get_y()
 	};
 }
