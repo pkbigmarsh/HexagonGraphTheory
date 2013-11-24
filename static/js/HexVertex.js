@@ -171,7 +171,7 @@ function HexVertex(parameters){
 			return null;
 		}	
 
-		var range = Math.PI / 12;
+		var range = 0; //Math.PI / 12;
 		var angle = angle_between_two_points(this.get_pos(), end_pos);
 
 		if(ANGLE_NN - range <= angle && ANGLE_NN + range >= angle)
@@ -191,7 +191,7 @@ function HexVertex(parameters){
 
 		if(ANGLE_NE - range <= angle && ANGLE_NE + range >= angle)
 			return NE;
-			
+
 		return -1;
 	};
 

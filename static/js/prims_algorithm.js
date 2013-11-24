@@ -1,7 +1,6 @@
 var selected_origin = null;
 var current_highlighted = null;
 var edges = null;
-var edge_count = null;
 var new_edegs = null;
 var timer = null;
 
@@ -61,7 +60,6 @@ function prims()
 	graph.clean();
 	graph.hex_visited[graph.origin.graph_index] = true;
 	edges = edges.concat(new_edges);
-	edge_count = 1;
 	next_edge();
 	timer = setInterval(next_edge, 1000);
 }
@@ -95,10 +93,8 @@ function next_edge()
 			new_edges = graph.get_edges(min_edge.to);
 			edges = edges.concat(new_edges);
 			placed_edges.push(min_edge);
-			min_edge.draw("black", edge_count);
-			edge_count ++;
+			min_edge.draw("black");
 			main_stage.addChild(min_edge.shape);
-			main_stage.addChild(min_edge.text);
 		}
 	}
 	else
