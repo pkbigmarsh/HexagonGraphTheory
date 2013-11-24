@@ -191,7 +191,7 @@ function HexVertex(parameters){
 
 		if(ANGLE_NE - range <= angle && ANGLE_NE + range >= angle)
 			return NE;
-		
+			
 		return -1;
 	};
 

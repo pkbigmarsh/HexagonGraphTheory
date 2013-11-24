@@ -129,11 +129,18 @@ function place_hex(event)
 {
 	main_stage.removeEventListener("stagemousemove", move_hex);
 	main_stage.removeEventListener("stagemousedown", place_hex);
-	// Come back to this.
-	//graph.add_hex(current_hex);
 
 	if(current_bottom_hex == null)
 	{
+		for(var i = 0; i < placed_hexes.length; i ++)
+		{
+			if(current_hex.get_distance(placed_hexes[i].get_bottom()) == 0)
+			{
+				current_bottom_hex = null;
+				current_hex = null;
+				return;
+			}
+		}
 		placed_hexes.push(current_hex);
 	}
 	else

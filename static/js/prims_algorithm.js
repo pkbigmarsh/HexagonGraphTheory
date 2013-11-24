@@ -50,7 +50,6 @@ function start()
 
 	place_placed_hexes_into_graph(current_highlighted);
 	graph.clean();
-	console.log(graph.toString());
 	prims();
 }
 
@@ -69,7 +68,6 @@ function prims()
 
 function next_edge()
 {
-	console.log("Remaining edges: ", edges.length);
 	if(edges.length != 0)
 	{
 		var min = 9999999;
