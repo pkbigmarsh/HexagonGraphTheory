@@ -152,6 +152,8 @@ function place_placed_hexes_into_graph(origin)
 	for(var i = 0; i < placed_hexes.length; i ++)
 	{
 		if(placed_hexes[i] != origin)
+		{
 			graph.add_hex(placed_hexes[i]);
+		}
 	}
 }

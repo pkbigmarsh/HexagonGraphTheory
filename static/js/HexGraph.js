@@ -56,7 +56,7 @@ function HexGraph(parameters) {
 		this.hexes.push(new_hex);
 		this.num_vertices ++;
 		
-		for(var current_direction = NN; current_direction <= NE; current_direction ++)
+		for(var current_direction = NN; current_direction <= NW; current_direction ++)
 		{
 			if(connecting_hexes[current_direction] != undefined)
 			{
@@ -75,23 +75,18 @@ function HexGraph(parameters) {
 		}	
 
 		info = [];
-		for(var current_direction = NN; current_direction <= NE; current_direction ++)
+		for(var j = 0; j < this.num_vertices; j ++)
 		{
-			for(var j = 0; j < this.num_vertices; j ++)
+			var test_hex = this.hexes[j];
+			var direction = hex.get_direction_to_hex(test_hex);
+			if(info[direction] == undefined)
+				info[direction] = test_hex;
+			else if(direction != -1)
 			{
-				var test_hex = this.hexes[j];
-				if(hex.get_direction_to_hex(test_hex) == current_direction)
-				{
-					if(info[current_direction] == undefined)
-						info[current_direction] = test_hex;
-					else
-					{
-						var distance_to_current = hex.get_distance(info[current_direction]);
-						var distance_to_new     = hex.get_distance(test_hex);
-						if(distance_to_new < distance_to_current)
-							info[current_direction] = test_hex;
-					}
-				}
+				var distance_to_current = hex.get_distance(info[direction]);
+				var distance_to_new     = hex.get_distance(test_hex);
+				if(distance_to_new < distance_to_current)
+					info[direction] = test_hex;
 			}
 		}
 

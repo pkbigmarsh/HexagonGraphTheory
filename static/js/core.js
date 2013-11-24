@@ -53,3 +53,24 @@ function get_hex_under_point(point)
 
 	return highest;
 }
+
+function angle_between_two_points(start_point, end_point)
+{
+	var dx = end_point.x - start_point.x;
+	var dy = end_point.y - start_point.y;
+
+	if(dx == 0)
+	{
+		if(dy > 0)
+			return Math.PI / 2;
+		else if(dy < 0)
+			return Math.PI * 3 / 2;
+	}
+	
+	angle = Math.atan2(dy, dx);
+	if(angle < 0)
+		angle += 2 * Math.PI;
+	
+	return angle;
+
+}

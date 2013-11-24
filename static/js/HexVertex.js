@@ -171,35 +171,28 @@ function HexVertex(parameters){
 			return null;
 		}	
 
+		var range = Math.PI / 12;
+		var angle = angle_between_two_points(this.get_pos(), end_pos);
 
-		var start_pos = this.get_pos();
+		if(ANGLE_NN - range <= angle && ANGLE_NN + range >= angle)
+		return NN;
 
-		var vertical_bounds = {
-			left: start_pos.x - HEX_RADIUS / 2, 
-			right: start_pos.x + HEX_RADIUS / 2
-		};
+		if(ANGLE_NW - range <= angle && ANGLE_NW + range >= angle)
+			return NW;
+
+		if(ANGLE_SW - range <= angle && ANGLE_SW + range >= angle)
+			return SW;
+
+		if(ANGLE_SS - range <= angle && ANGLE_SS + range >= angle)
+			return SS;
+
+		if(ANGLE_SE - range <= angle && ANGLE_SE + range >= angle)
+			return SE;
+
+		if(ANGLE_NE - range <= angle && ANGLE_NE + range >= angle)
+			return NE;
 		
-
-		if(start_pos.y > end_pos.y)
-		{
-			if(end_pos.x < vertical_bounds.left)
-				return NE;
-			else if(end_pos.x > vertical_bounds.right)
-				return NW;
-			else
-				return NN;
-		}
-		else if(start_pos.y < end_pos.y)
-		{
-			if(end_pos.x < vertical_bounds.left)
-				return SE;
-			else if(end_pos.x > vertical_bounds.right)
-				return SW;
-			else
-				return SS;
-		}
-		else
-			return -1;
+		return -1;
 	};
 
 	this.get_direction_to_hex = function(other_hex) {
@@ -208,30 +201,9 @@ function HexVertex(parameters){
 			throw_error("get_direction_to_hex", "Given Hex is empty", other_hex);
 			return null;
 		}
-		other_hex = other_hex.get_bottom();	
-		var start_pos = this.get_pos();
-		var end_pos = other_hex.get_pos();
+		other_hex = other_hex.get_bottom();
 
-		if(start_pos.y > end_pos.y)
-		{
-			if(start_pos.x > end_pos.x)
-				return NE;
-			else if(start_pos.x == end_pos.x)
-				return NN;
-			else
-				return NW;
-		}
-		else if(start_pos.y < end_pos.y)
-		{
-			if(start_pos.x > end_pos.x)
-				return SE;
-			else if(start_pos.x == end_pos.x)
-				return SS;
-			else
-				return SW;
-		}
-		else 
-			return -1;
+		return this.get_direction_to_point(other_hex.get_pos());
 	};
 
 	this.place_above = function(new_hex) {

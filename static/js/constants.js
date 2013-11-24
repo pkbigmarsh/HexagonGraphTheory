@@ -1,9 +1,16 @@
 var NN 						= 0;
-var NW 						= 1;
-var SW 						= 2;
+var NE 						= 1;
+var SE 						= 2;
 var SS 						= 3;
-var SE 						= 4;
-var NE 						= 5;
+var SW 						= 4;
+var NW 						= 5;
+
+var ANGLE_NN				= Math.PI * 9 / 6;
+var ANGLE_NE 				= Math.PI * 11 / 6;
+var ANGLE_SE 				= Math.PI * 1 / 6;
+var ANGLE_SS 				= Math.PI * 3 / 6;
+var ANGLE_SW 				= Math.PI * 5 / 6;
+var ANGLE_NW 				= Math.PI * 7 / 6;
 
 var HEX_RADIUS 				= 30;
 var HEX_BASE 				= 15;

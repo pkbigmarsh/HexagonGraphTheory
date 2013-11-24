@@ -21,23 +21,17 @@ function HexEdge(parameters) {
 	}
 
 	this.draw = function(color, num) {
+		var to = this.to.get_top();
+		var from = this.from.get_top();
 		this.set_pos();
 		color = default_arg(color, "black");
 		num = default_arg(num, 0);
 		this.text = new createjs.Text(num, "20px Arial", "#0000FF");
-		var dx = this.from.get_x() - this.to.get_x();
-		var dy = this.from.get_y() - this.to.get_y();
-		var radius = this.from.get_distance(this.to) * .9;
-		var angle = 0;
-		if(dx == 0)
-		{
-			if(dy > 0)
-				angle = Math.PI * 3 / 2;
-			else
-				angle = Math.PI / 2;
-		}
-		else
-			angle = Math.tan(dy / dx);
+		var dx = from.get_x() - to.get_x();
+		var dy = from.get_y() - to.get_y();
+		var radius = from.get_distance(to) * .9;
+		var angle = angle_between_two_points(from.get_pos(), to.get_pos());
+		
 		var point_x = Math.cos(angle) * radius;
 		var point_y = Math.sin(angle) * radius;
 

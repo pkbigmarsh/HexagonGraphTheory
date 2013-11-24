@@ -1,5 +1,9 @@
 var selected_origin = null;
 var current_highlighted = null;
+var edges = null;
+var edge_count = null;
+var new_edegs = null;
+var timer = null;
 
 var prims_info = "<p style='margin: 3px;'>Please click to select a hex as the origin for the minimum spanning tree. After that hit start.</p></br>";
 var prims_button = '<a style="margin: 3px;" class="button" id="prim_start">Start</a>';
@@ -46,21 +50,27 @@ function start()
 
 	place_placed_hexes_into_graph(current_highlighted);
 	graph.clean();
+	console.log(graph.toString());
 	prims();
-	//console.log(graph.toString());
 }
 
 function prims()
 {
-	var edges = [];
+	edges = [];
 	placed_edges = [];
-	var new_edges = graph.get_edges(graph.origin);
-	console.log(graph.origin.toString());
+	new_edges = graph.get_edges(graph.origin);
 	graph.clean();
 	graph.hex_visited[graph.origin.graph_index] = true;
 	edges = edges.concat(new_edges);
-	var edge_count = 1;
-	while(edges.length != 0)
+	edge_count = 1;
+	next_edge();
+	timer = setInterval(next_edge, 1000);
+}
+
+function next_edge()
+{
+	console.log("Remaining edges: ", edges.length);
+	if(edges.length != 0)
 	{
 		var min = 9999999;
 		var min_edge = null;
@@ -68,22 +78,31 @@ function prims()
 		for(var i = 0; i < edges.length; i ++)
 		{
 			var to_index = edges[i].to.graph_index;
-			if(edges[i].distance < min && !graph.hex_visited[to_index])
+			if(graph.hex_visited[to_index])
+			{
+				edges.splice(i, 1);
+				i --;
+			}
+			else if(edges[i].distance < min)
 			{
 				min_edge = edges[i];
 				min = edges[i].distance;
 				min_pos = i;
 			}
 		}
-
-		edges.splice(min_pos, 1);
-		graph.hex_visited[min_edge.to.graph_index] = true;
-		new_edges = graph.get_edges(min_edge.to);
-		edges = edges.concat(new_edges);
-		placed_edges.push(min_edge);
-		min_edge.draw("black", edge_count);
-		edge_count ++;
-		main_stage.addChild(min_edge.shape);
-		main_stage.addChild(min_edge.text);
+		if(min_edge != null)
+		{
+			edges.splice(min_pos, 1);
+			graph.hex_visited[min_edge.to.graph_index] = true;
+			new_edges = graph.get_edges(min_edge.to);
+			edges = edges.concat(new_edges);
+			placed_edges.push(min_edge);
+			min_edge.draw("black", edge_count);
+			edge_count ++;
+			main_stage.addChild(min_edge.shape);
+			main_stage.addChild(min_edge.text);
+		}
 	}
+	else
+		clearInterval(timer);
 }
