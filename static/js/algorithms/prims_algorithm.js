@@ -4,14 +4,12 @@ var edges = null;
 var new_edegs = null;
 var timer = null;
 
-var prims_info = "<p style='margin: 3px;'>Please click to select a hex as the origin for the minimum spanning tree. After that hit start.</p></br>";
-var prims_button = '<a style="margin: 3px;" class="button" id="prim_start">Start</a>';
+var prims_info = "<p style='margin: 3px;'>Please click to select a hex as the origin for the minimum spanning tree.</p>";
 var placed_edges = [];
 
 $("#prims_button").on("click", function() {
-	$("#info_panel").html(prims_info + prims_button);
-
-	$("#prim_start").on("click", start);
+	disable_buttons();
+	$("#info_panel").html(prims_info);
 	
 	main_stage.addEventListener("stagemousemove", highlight);
 	main_stage.addEventListener("stagemousedown", start);
@@ -98,5 +96,8 @@ function next_edge()
 		}
 	}
 	else
+	{
 		clearInterval(timer);
+		enable_buttons();
+	}
 }

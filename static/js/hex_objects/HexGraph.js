@@ -22,6 +22,26 @@ function HexGraph(parameters) {
 		}
 	};
 
+	this.get_parent_index = function(hex) {
+		var index = hex.graph_index;
+		while(index != this.parent[index])
+			index = this.parent[index];
+
+		return index;
+	};
+
+	this.get_parent_height = function(hex) {
+		var index = hex.graph_index;
+		var height = 0;
+		while(index != this.parent[index])
+		{
+			index = this.parent[index];
+			height ++;
+		}
+
+		return height;
+	};
+
 	this.get_edges = function(hex) {
 		var edges = [];
 		for(var i = NN; i <= NW; i ++)
@@ -41,6 +61,28 @@ function HexGraph(parameters) {
 		}
 		return edges;
 	};
+
+	this.get_all_edges = function() {
+		var edges = [];
+		for(var i = 0; i < this.num_vertices; i ++)
+		{
+			var current = this.hexes[i];
+			for(var dir = NN; dir <= NW; dir ++)
+			{
+				var next = current.neighbors[dir];
+				if(typeof next != 'undefined' && next != null)
+				{
+					var edge = new HexEdge();
+					edge.from = current;
+					edge.to = next;
+					edge.calculate_distance();
+					edges.push(edge);
+				}
+			}
+		}
+
+		return edges;
+	}
 
 	this.add_hex = function(new_hex) {
 		if(this.origin == null)

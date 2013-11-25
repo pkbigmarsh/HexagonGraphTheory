@@ -155,6 +155,7 @@ function place_hex(event)
 function place_placed_hexes_into_graph(origin)
 {
 	graph = new HexGraph();
+	origin = default_arg(origin, placed_hexes[0]);
 	graph.add_hex(origin);
 	for(var i = 0; i < placed_hexes.length; i ++)
 	{

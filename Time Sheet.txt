@@ -15,4 +15,5 @@
 	3:35pm - 
 		Fixing the graph creation
 		Finished Prims and I belived fixed the graph creation
+		Start Kruskels algorithm
 		

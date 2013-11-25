@@ -70,7 +70,17 @@ function angle_between_two_points(start_point, end_point)
 	angle = Math.atan2(dy, dx);
 	if(angle < 0)
 		angle += 2 * Math.PI;
-	
+
 	return angle;
 
+}
+
+function enable_buttons() 
+{
+	$(".button").removeAttr("disabled");
+}
+
+function disable_buttons()
+{
+	$(".button").attr("disabled", "disabled");	
 }
