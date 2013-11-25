@@ -12,8 +12,8 @@
 		creating the graph
 
 11/24/2013
-	3:35pm - 
+	3:35pm - 7:00pm
 		Fixing the graph creation
 		Finished Prims and I belived fixed the graph creation
 		Start Kruskels algorithm
-		
+		Start Dijkstra's algorithm

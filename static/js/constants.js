@@ -28,3 +28,5 @@ var HEX_GREEN 				= createjs.Graphics.getRGB(000, 155, 000);
 var TERRAIN_EASY 			= 0;
 var TERRAIN_MEDIUM 			= 1;
 var TERRAIN_HARD			= 2;
+
+var PLACING_SPEED 			= 1000;

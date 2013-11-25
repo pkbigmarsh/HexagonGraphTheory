@@ -59,7 +59,7 @@ function prims()
 	graph.hex_visited[graph.origin.graph_index] = true;
 	edges = edges.concat(new_edges);
 	next_edge();
-	timer = setInterval(next_edge, 1000);
+	timer = setInterval(next_edge, PLACING_SPEED);
 }
 
 function next_edge()

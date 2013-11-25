@@ -24,7 +24,7 @@ $("#kruskels_button").on("click", function() {
 			return 0;
 	});
 	next_kruskel_edge();
-	kruskel_timer = setInterval(next_kruskel_edge, 1000);
+	kruskel_timer = setInterval(next_kruskel_edge, PLACING_SPEED);
 });
 
 function next_kruskel_edge()
