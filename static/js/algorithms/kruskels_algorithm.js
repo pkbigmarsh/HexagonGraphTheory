@@ -14,6 +14,7 @@ $("#kruskels_button").on("click", function() {
 
 	place_placed_hexes_into_graph();
 	graph.clean();
+	console.log(graph.parent);
 	sorted_edges = graph.get_all_edges();
 	sorted_edges.sort(function(edge1, edge2) {
 		if(edge1.distance < edge2.distance)
@@ -62,24 +63,25 @@ function next_kruskel_edge()
 			sorted_edges.splice(min_pos, 1);
 			kruskel_edges.push(min_edge);
 
-			// var from_height = graph.get_parent_height(min_edge.from);
-			// var to_height = graph.get_parent_height(min_edge.to);
-			// console.log("from: ", from_height);
-			// console.log("to: ", to_height);
-			// if(to_height < from_height)
-			// {
-			// 	new_edge = new HexEdge();
-			// 	new_edge.from = min_edge.to;
-			// 	new_edge.to = min_edge.from;
-			// 	min_edge = new_edge;
-			// }
+			var from_height = graph.get_parent_height(min_edge.from);
+			var to_height = graph.get_parent_height(min_edge.to);
+			console.log("From Height: ", from_height);
+			console.log("To Height: ", to_height);
 
-			var from_index = min_edge.from.graph_index;
-			var to_index = min_edge.to.graph_index;
+			if(to_height < from_height)
+			{
+				new_edge = new HexEdge();
+				new_edge.from = min_edge.to;
+				new_edge.to = min_edge.from;
+				min_edge = new_edge;
+			}
 
-			graph.parent[to_index] = from_index;
+			var to_parent = graph.get_parent_hex(min_edge.to);
+			var index = to_parent.graph_index;
 
-			min_edge.draw("black");
+			graph.parent[index] = graph.get_parent_index(min_edge.from);
+
+			min_edge.draw_undirected("black");
 			main_stage.addChild(min_edge.shape);
 
 		}
@@ -88,6 +90,7 @@ function next_kruskel_edge()
 	{
 		clearInterval(kruskel_timer);
 		enable_buttons();
+		console.log(graph.parent);
 	}
 }
 

@@ -42,6 +42,14 @@ function HexGraph(parameters) {
 		return height;
 	};
 
+	this.get_parent_hex = function(hex) {
+		var index = hex.graph_index;
+		while(index != this.parent[index])
+			index = this.parent[index];
+
+		return graph.hexes[index];
+	}
+
 	this.get_edges = function(hex) {
 		var edges = [];
 		for(var i = NN; i <= NW; i ++)

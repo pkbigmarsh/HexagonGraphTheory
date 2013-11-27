@@ -20,18 +20,19 @@ function HexEdge(parameters) {
 		return true;
 	}
 
-	this.draw = function(color, num) {
+	this.draw_directed = function(color) {
 		var to = this.to.get_top();
 		var from = this.from.get_top();
 		this.set_pos();
 		color = default_arg(color, "black");
-		num = default_arg(num, 0);
 		
 		var dx = from.get_x() - to.get_x();
 		var dy = from.get_y() - to.get_y();
-		var radius = from.get_distance(to) * .9;
+		var radius = from.get_distance(to) * .9 - LINE_BUFFER;
 		var angle = angle_between_two_points(from.get_pos(), to.get_pos());
 		
+		var start_x = Math.cos(angle) * LINE_BUFFER;
+		var start_y = Math.sin(angle) * LINE_BUFFER;
 		var end_x = Math.cos(angle) * radius;
 		var end_y = Math.sin(angle) * radius;
 
@@ -39,7 +40,7 @@ function HexEdge(parameters) {
 		this.graphics.beginStroke(color);
 		this.graphics.setStrokeStyle(3);
 
-		this.graphics.moveTo(0, 0);
+		this.graphics.moveTo(start_x, start_y);
 		this.graphics.lineTo(end_x, end_y);
 
 		var adjust = Math.PI / 12;
@@ -56,6 +57,31 @@ function HexEdge(parameters) {
 		this.graphics.moveTo(end_x, end_y);
 		this.graphics.lineTo(point_x, point_y);
 
+		this.graphics.endStroke();
+	}
+
+	this.draw_undirected = function(color) {
+		var to = this.to.get_top();
+		var from = this.from.get_top();
+		this.set_pos();
+		color = default_arg(color, "black");
+		
+		var dx = from.get_x() - to.get_x();
+		var dy = from.get_y() - to.get_y();
+		var radius = from.get_distance(to) - (LINE_BUFFER * 2);
+		var angle = angle_between_two_points(from.get_pos(), to.get_pos());
+		
+		var start_x = Math.cos(angle) * LINE_BUFFER;
+		var start_y = Math.sin(angle) * LINE_BUFFER;
+		var end_x = Math.cos(angle) * radius;
+		var end_y = Math.sin(angle) * radius;
+
+		this.graphics.clear();
+		this.graphics.beginStroke(color);
+		this.graphics.setStrokeStyle(3);
+
+		this.graphics.moveTo(start_x, start_y);
+		this.graphics.lineTo(end_x, end_y);
 		this.graphics.endStroke();
 	}
 

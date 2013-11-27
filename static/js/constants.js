@@ -30,3 +30,4 @@ var TERRAIN_MEDIUM 			= 1;
 var TERRAIN_HARD			= 2;
 
 var PLACING_SPEED 			= 1000;
+var LINE_BUFFER 			= 3;

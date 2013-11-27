@@ -91,7 +91,7 @@ function next_edge()
 			new_edges = graph.get_edges(min_edge.to);
 			edges = edges.concat(new_edges);
 			placed_edges.push(min_edge);
-			min_edge.draw("black");
+			min_edge.draw_directed("black");
 			main_stage.addChild(min_edge.shape);
 		}
 	}
