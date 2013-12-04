@@ -10,15 +10,18 @@ function HexGraph(parameters) {
 	this.hex_visited	= default_arg(parameters.hex_visited, []);
 	this.hexes 			= default_arg(parameters.hexes, []);
 	this.parent 		= default_arg(parameters.parent, []);
+	this.distance 		= default_arg(parameters.distance, []);
 
 	this.clean = function() {
 		this.hex_visited = [];
 		this.parent = [];
+		this.distance = [];
 		for(var i = 0; i < this.num_vertices; i ++)
 		{
 			this.hexes[i].graph_index = i;
 			this.parent.push(i);
 			this.hex_visited.push(false);
+			this.distance.push(Number.MAX_VALUE);
 		}
 	};
 
@@ -106,6 +109,7 @@ function HexGraph(parameters) {
 		this.hexes.push(new_hex);
 		this.num_vertices ++;
 		
+		console.log(connecting_hexes);
 		for(var current_direction = NN; current_direction <= NW; current_direction ++)
 		{
 			if(connecting_hexes[current_direction] != undefined)

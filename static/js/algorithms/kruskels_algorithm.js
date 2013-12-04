@@ -14,7 +14,6 @@ $("#kruskels_button").on("click", function() {
 
 	place_placed_hexes_into_graph();
 	graph.clean();
-	console.log(graph.parent);
 	sorted_edges = graph.get_all_edges();
 	sorted_edges.sort(function(edge1, edge2) {
 		if(edge1.distance < edge2.distance)
@@ -65,8 +64,6 @@ function next_kruskel_edge()
 
 			var from_height = graph.get_parent_height(min_edge.from);
 			var to_height = graph.get_parent_height(min_edge.to);
-			console.log("From Height: ", from_height);
-			console.log("To Height: ", to_height);
 
 			if(to_height < from_height)
 			{
@@ -90,7 +87,6 @@ function next_kruskel_edge()
 	{
 		clearInterval(kruskel_timer);
 		enable_buttons();
-		console.log(graph.parent);
 	}
 }
 

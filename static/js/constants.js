@@ -11,6 +11,8 @@ var ANGLE_SE 				= Math.PI * 1 / 6;
 var ANGLE_SS 				= Math.PI * 3 / 6;
 var ANGLE_SW 				= Math.PI * 5 / 6;
 var ANGLE_NW 				= Math.PI * 7 / 6;
+console.log(ANGLE_SE * 170 / Math.PI);
+console.log();
 
 var HEX_RADIUS 				= 30;
 var HEX_BASE 				= 15;

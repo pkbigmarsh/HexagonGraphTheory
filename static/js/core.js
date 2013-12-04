@@ -84,3 +84,31 @@ function disable_buttons()
 {
 	$(".button").attr("disabled", "disabled");	
 }
+
+function print_direction(direction)
+{
+	switch(direction)
+	{
+		case NN:
+			console.log("North");
+			break;
+		case NE:
+			console.log("North East");
+			break;
+		case SE:
+			console.log("South East");
+			break;
+		case SS:
+			console.log("South");
+			break;
+		case SW:
+			console.log("South West");
+			break;
+		case NW:
+			console.log("North West");
+			break;
+		default:
+			console.log("Invalid Direction");
+			break;
+	};
+}
