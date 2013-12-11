@@ -54,7 +54,7 @@ function dijkstras()
 {
 	edges = [];
 	placed_edges = [];
-	new_edges = graph.get_edges(graph.origin);
+	new_edges = graph.get_all_edges(graph.origin);
 	graph.clean();
 	graph.hex_visited[graph.origin.graph_index] = true;
 	graph.distance[graph.origin.graph_index] = 0;
@@ -70,40 +70,44 @@ function dijsktra_next_edge()
 		var min = 9999999;
 		var min_edge = null;
 		var min_pos = -1;
+		console.log(edges.length);
+		console.log(graph.distance);
 		for(var i = 0; i < edges.length; i ++)
 		{
 			var to_index = edges[i].to.graph_index;
 			var from_index = edges[i].from.graph_index;
-			if(graph.distance[to_index] > graph.distance[from_index] + edges[i].distance)
+			var current_distance = graph.distance[to_index];
+			var new_distance = graph.distance[from_index] + edges[i].distance
+			console.log(from_index);
+			// console.log(new_distance);
+			if(new_distance < current_distance)
+				current_distance = new_distance;
+			// console.log(edges[i].distance);
+			if(graph.hex_visited[to_index])
+			{
+				edges.splice(i, 1);
+				i --;
+			}
+			else if(new_distance <  min && !graph.hex_visited[to_index])
 			{
 				min_edge = edges[i];
-				min = edges[i].distance;
+				min = new_distance;
 				min_pos = i;
 			}
 		}
 		if(min_edge != null)
 		{
-			// check to see if the an edge has already been placed
-			if(graph.hex_visited[min_edge.to.graph_index])
-			{
-				// remove the old edge
-				for(var i = 0; i < placed_edges.length; i ++)
-				{
-					if(placed_edges.to = min_edge.to)
-					{
-						main_stage.removeChild(placed_edges.shape);
-						placed_edges.splice(i, 1);
-						break;
-					}
-				}
-			}
-
+			var to_index = min_edge.to.graph_index;
+			var from_index = min_edge.from.graph_index;
+			var new_distance = graph.distance[from_index] + min_edge.distance
+			console.log("Edge Weight: " + min_edge.distance);
+			
 			edges.splice(min_pos, 1);
-			graph.hex_visited[min_edge.to.graph_index] = true;
-			graph.parent[min_edge.to.graph_index] = min_edge.from.graph_index;
-			graph.distance[min_edge.to.graph_index] = graph.distance[min_edge.from.graph_index] + min_edge.distance;
-			new_edges = graph.get_edges(min_edge.to);
-			edges = edges.concat(new_edges);
+			graph.hex_visited[to_index] = true;
+			graph.parent[to_index] = from_index;
+			graph[to_index] = new_distance;
+			graph.distance[to_index] = new_distance;
+			var new_edges = graph.get_edges(min_edge.to);
 			placed_edges.push(min_edge);
 			min_edge.draw_directed("black");
 			main_stage.addChild(min_edge.shape);

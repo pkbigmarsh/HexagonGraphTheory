@@ -162,7 +162,6 @@ function place_placed_hexes_into_graph(origin)
 		if(placed_hexes[i] != origin)
 		{
 			graph.add_hex(placed_hexes[i]);
-			console.log(placed_hexes[i].toString());
 		}
 	}
 }

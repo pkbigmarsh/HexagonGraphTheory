@@ -73,6 +73,23 @@ function HexGraph(parameters) {
 		return edges;
 	};
 
+	this.get_all_edges = function(hex) {
+		var edges = [];
+		for(var i = NN; i <= NW; i ++)
+		{
+			if(hex.neighbors[i] != null)
+			{
+				var index = hex.neighbors[i].graph_index;
+				var edge = new HexEdge();
+				edge.from = hex;
+				edge.to = hex.neighbors[i];
+				edge.calculate_distance();
+				edges.push(edge);
+			}
+		}
+		return edges;
+	};
+
 	this.get_all_edges = function() {
 		var edges = [];
 		for(var i = 0; i < this.num_vertices; i ++)
