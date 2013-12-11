@@ -70,19 +70,14 @@ function dijsktra_next_edge()
 		var min = 9999999;
 		var min_edge = null;
 		var min_pos = -1;
-		console.log(edges.length);
-		console.log(graph.distance);
 		for(var i = 0; i < edges.length; i ++)
 		{
 			var to_index = edges[i].to.graph_index;
 			var from_index = edges[i].from.graph_index;
 			var current_distance = graph.distance[to_index];
 			var new_distance = graph.distance[from_index] + edges[i].distance
-			console.log(from_index);
-			// console.log(new_distance);
 			if(new_distance < current_distance)
 				current_distance = new_distance;
-			// console.log(edges[i].distance);
 			if(graph.hex_visited[to_index])
 			{
 				edges.splice(i, 1);
@@ -100,7 +95,6 @@ function dijsktra_next_edge()
 			var to_index = min_edge.to.graph_index;
 			var from_index = min_edge.from.graph_index;
 			var new_distance = graph.distance[from_index] + min_edge.distance
-			console.log("Edge Weight: " + min_edge.distance);
 			
 			edges.splice(min_pos, 1);
 			graph.hex_visited[to_index] = true;

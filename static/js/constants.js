@@ -31,3 +31,5 @@ var TERRAIN_HARD			= 2;
 
 var PLACING_SPEED 			= 1000;
 var LINE_BUFFER 			= 3;
+
+var LARGE_INT 				= 9999999999999999;
