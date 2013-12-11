@@ -58,24 +58,25 @@ function HexVertex(parameters){
 
 	this.highlight = function(color)
 	{
+		var hex = this.get_top();
 		color = default_arg(color, "yellow");
 		// --- Draw Hexagon Face --- //
-		this.graphics.beginStroke(color);
-		this.graphics.setStrokeStyle(3);
+		hex.graphics.beginStroke(color);
+		hex.graphics.setStrokeStyle(3);
 		var angle = 0;
 
-		this.graphics.moveTo(Math.cos(angle) * HEX_RADIUS, Math.sin(angle) * HEX_RADIUS);
+		hex.graphics.moveTo(Math.cos(angle) * HEX_RADIUS, Math.sin(angle) * HEX_RADIUS);
 		for(var i = 0; i < 6; i ++)
 		{
 			angle += Math.PI / 3;
-			this.graphics.lineTo(Math.cos(angle) * HEX_RADIUS, Math.sin(angle) * HEX_RADIUS);
+			hex.graphics.lineTo(Math.cos(angle) * HEX_RADIUS, Math.sin(angle) * HEX_RADIUS);
 		}
-		this.graphics.endStroke();
+		hex.graphics.endStroke();
 	}
 
 	this.unHighlight = function()
 	{
-		this.create_hex(this.color);
+		this.get_top().create_hex(this.color);
 	}
 
 	this.create_hex = function(color)

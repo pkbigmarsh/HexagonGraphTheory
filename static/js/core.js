@@ -112,3 +112,50 @@ function print_direction(direction)
 			break;
 	};
 }
+
+
+function clear_edges()
+{
+	for(var i = 0; i < placed_edges.length; i ++)
+	{
+		main_stage.removeChild(placed_edges[i].shape);
+	}
+
+	if(current_highlighted != null)
+		current_highlighted.unHighlight();
+
+	if(selected_start != null)
+		selected_start.unHighlight();
+
+	if(selected_end != null)
+		selected_end.unHighlight();
+
+	current_highlighted = null;
+	edges = null;
+	new_edges = null;
+	timer = null;
+	placed_edges = [];
+	sorted_edges = [];
+	edges = null;
+	timer = null;
+	selected_start = null;
+	selected_end = null;
+}
+
+function clear_hexes()
+{
+	for(var i = 0; i < placed_hexes.length; i ++)
+	{
+		var hex = placed_hexes[i].get_bottom();
+		while(hex != null)
+		{
+			main_stage.removeChild(hex.shape);
+			hex = hex.above;
+		}
+	}
+
+	clear_edges();
+	current_hex = null;
+	current_bottom_hex = null;
+	placed_hexes = [];
+}

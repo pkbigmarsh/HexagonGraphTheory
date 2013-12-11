@@ -1,6 +1,5 @@
 var main_stage;
 var hex_select_stage;
-var hex_info_stage;
 
 var graph;
 var hex_button_simple;
@@ -11,16 +10,26 @@ var current_hex;
 var current_bottom_hex;
 var placed_hexes = [];
 
+// Algorithm Variables
+var current_highlighted = null;
+var edges = null;
+var new_edges = null;
+var timer = null;
+var placed_edges = [];
+var sorted_edges = [];
+var edges = null;
+var timer = null;
+var selected_start = null;
+var selected_end = null;
+
 $(document).ready(function() {
 		main_stage 			= new createjs.Stage("grid_canvas");
 		hex_select_stage 	= new createjs.Stage("hex_canvas");
-		hex_info_stage 		= new createjs.Stage("hex_info_canvas");
 
 		createjs.Ticker.setFPS(40);
 		createjs.Ticker.addEventListener('tick', function(){
 			main_stage.update();
 			hex_select_stage.update();
-			hex_info_stage.update();
 		});
 
 		graph = new HexGraph();
@@ -165,3 +174,6 @@ function place_placed_hexes_into_graph(origin)
 		}
 	}
 }
+
+$("#clear_hexes_button").on("click", clear_hexes);
+$("#clear_edges_button").on("click", clear_edges);

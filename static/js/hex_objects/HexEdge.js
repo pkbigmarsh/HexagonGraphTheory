@@ -23,7 +23,8 @@ function HexEdge(parameters) {
 	this.draw_directed = function(color) {
 		var to = this.to.get_top();
 		var from = this.from.get_top();
-		this.set_pos();
+		this.set_x(from.get_x());
+		this.set_y(from.get_y());
 		color = default_arg(color, "black");
 		
 		var dx = from.get_x() - to.get_x();
@@ -63,7 +64,8 @@ function HexEdge(parameters) {
 	this.draw_undirected = function(color) {
 		var to = this.to.get_top();
 		var from = this.from.get_top();
-		this.set_pos();
+		this.set_x(from.get_x());
+		this.set_y(from.get_y());
 		color = default_arg(color, "black");
 		
 		var dx = from.get_x() - to.get_x();

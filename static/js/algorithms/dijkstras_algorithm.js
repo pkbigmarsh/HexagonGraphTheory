@@ -1,13 +1,7 @@
-var selected_origin = null;
-var current_highlighted = null;
-var edges = null;
-var new_edegs = null;
-var timer = null;
-
 var dijkstras_info = "<p style='margin: 3px;'>Please click to select a hex as the origin for the Shortest Path tree.</p>";
-var placed_edges = [];
 
 $("#dijkstras_button").on("click", function() {
+	clear_edges();
 	disable_buttons();
 	$("#info_panel").html(dijkstras_info);
 	
@@ -45,6 +39,7 @@ function dikstra_start()
 	main_stage.removeEventListener("stagemousedown", dikstra_start);
 	$("#info_panel").html("");
 
+	current_highlighted = current_highlighted.get_bottom();
 	place_placed_hexes_into_graph(current_highlighted);
 	graph.clean();
 	dijkstras();

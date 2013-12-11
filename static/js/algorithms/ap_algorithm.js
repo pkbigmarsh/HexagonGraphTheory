@@ -1,14 +1,12 @@
 var ap;
 var next;
 
-var selected_one = null;
-var selected_two = null;
-var current_highlighted = null;
-var placed_edges = [];
-var time = null;
+var ap_info = "<p style='margin: 3px;'>Please select two hexes to get the shortest path bewtween them.</p>";
 
 $("#all_pairs_button").on("click", function() {
-	disable_buttons();
+	clear_edges();
+	disable_buttons()
+	$("#info_panel").html(ap_info);
 
 	place_placed_hexes_into_graph();
 	graph.clean();
@@ -61,14 +59,14 @@ function ap_highlight(event)
 	
 	if(hover_hex != null)
 	{
-		if(current_highlighted != null && hover_hex != current_highlighted && current_highlighted != selected_one)
+		if(current_highlighted != null && hover_hex != current_highlighted && current_highlighted != selected_start)
 			current_highlighted.unHighlight();
 		current_highlighted = hover_hex;
 		current_highlighted.highlight();
 	}
 	else
 	{
-		if(current_highlighted != null && current_highlighted != selected_one)
+		if(current_highlighted != null && current_highlighted != selected_start)
 			current_highlighted.unHighlight();
 		current_highlighted = null;
 	}
@@ -76,22 +74,26 @@ function ap_highlight(event)
 
 function ap_start()
 {
-	if(current_highlighted != null && selected_one == null)
+	if(current_highlighted != null && selected_start == null)
 	{
-		selected_one = current_highlighted;
+		selected_start = current_highlighted;
 	}
 	else if(current_highlighted != null)
 	{
-		selected_two = current_highlighted;
+		selected_end = current_highlighted;
 
 		main_stage.removeEventListener("stagemousemove", ap_highlight);
 		main_stage.removeEventListener("stagemousedown", ap_start);
 
+		selected_start = selected_start.get_bottom();
+		selected_end = selected_end.get_bottom();
+
 		$("#info_panel").html("");
-		var p = path(selected_one.graph_index, selected_two.graph_index);	
+		var p = path(selected_start.graph_index, selected_end.graph_index);	
 		if(p == "NO PATH")
 			$("#info_panel").html("There is no path between the two points");
-		draw_path(selected_one, selected_two, p);
+		draw_path(selected_start, selected_end, p);
+		enable_buttons();
 	}
 	else
 	{

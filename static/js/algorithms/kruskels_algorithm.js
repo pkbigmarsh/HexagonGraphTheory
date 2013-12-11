@@ -1,16 +1,15 @@
 var kruskels_info = '<p style="margin: 3px;">Now beginning Kruskel\'s Algorithm.</p>';
-var sorted_edges = [];
-var kruskel_edges = [];
-var kruskel_timer = null;
+
 
 
 $("#kruskels_button").on("click", function() {
+	clear_edges();
 	disable_buttons();
 	$("#info_panel").html(kruskels_info);
 
 	sorted_edges = [];
-	kruskel_edges = [];
-	kruskel_timer = null;
+	placed_edges = [];
+	timer = null;
 
 	place_placed_hexes_into_graph();
 	graph.clean();
@@ -24,7 +23,7 @@ $("#kruskels_button").on("click", function() {
 			return 0;
 	});
 	next_kruskel_edge();
-	kruskel_timer = setInterval(next_kruskel_edge, PLACING_SPEED);
+	timer = setInterval(next_kruskel_edge, PLACING_SPEED);
 });
 
 function next_kruskel_edge()
@@ -60,7 +59,7 @@ function next_kruskel_edge()
 		if(min_edge != null)
 		{
 			sorted_edges.splice(min_pos, 1);
-			kruskel_edges.push(min_edge);
+			placed_edges.push(min_edge);
 
 			var from_height = graph.get_parent_height(min_edge.from);
 			var to_height = graph.get_parent_height(min_edge.to);
@@ -85,7 +84,7 @@ function next_kruskel_edge()
 	}
 	else
 	{
-		clearInterval(kruskel_timer);
+		clearInterval(timer);
 		enable_buttons();
 	}
 }
