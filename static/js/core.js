@@ -17,6 +17,14 @@ function opposite_direction(direction){
 	return (direction + 3) % 6;
 }
 
+function get_next(direction) {
+	return (direction + 1) % 6;
+}
+
+function get_previous(direction) {
+	return (direction + 5) % 6;
+}
+
 function throw_error(source_function, message, data)
 {
 	source_function = default_arg(source_function, "throw_error");
@@ -73,6 +81,22 @@ function angle_between_two_points(start_point, end_point)
 
 	return angle;
 
+}
+
+function get_hextant(angle)
+{
+	if(angle > Math.PI * 2)
+		angle -= Math.PI * 2;
+	else if(angle < 0)
+		angle += Math.PI * 2;
+	for(var i = 0; i < 6; i ++)
+	{
+		var angle_1 = Math.PI * i / 3;
+		var angle_2 = Math.PI * (i + 1) / 3;
+		if(angle_1 < angle && angle < angle_2)
+			return (i + 2) % 6;
+	}
+	return -1;
 }
 
 function enable_buttons() 
