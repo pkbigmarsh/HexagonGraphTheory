@@ -109,7 +109,6 @@ function HexGraph(parameters) {
 		this.hexes.push(new_hex);
 		this.num_vertices ++;
 		
-		console.log(connecting_hexes);
 		for(var current_direction = NN; current_direction <= NW; current_direction ++)
 		{
 			if(connecting_hexes[current_direction] != undefined)
