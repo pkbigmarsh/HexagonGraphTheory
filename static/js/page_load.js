@@ -68,10 +68,14 @@ function add_new_hex(new_hex)
 	if(current_hex == null)
 	{
 		current_hex = new_hex;
-		current_hex.set_pos({x: 0, y: 0});
+		var data = {
+			stageX: MAIN_STAGE_WIDTH / 2,
+			stageY: MAIN_STAGE_HEIGHT / 2
+		};
 		main_stage.addChild(new_hex.shape);
 		main_stage.addEventListener("stagemousemove", move_hex);
 		main_stage.addEventListener("stagemousedown", place_hex);
+		move_hex(data);
 	}
 }
 
