@@ -43,6 +43,12 @@ $(document).ready(function() {
 		hex_button_simple.addEventListener("click", function() {
 			add_new_hex(new HexVertex({color: HEX_GREEN, terrain: TERRAIN_EASY}));
 		});
+
+		var hex_label_simple = new createjs.Text("Simple", "bold 18px Arial", HEX_GREEN);
+		hex_label_simple.x = HEX_RADIUS;
+		hex_label_simple.y = 50 + HEX_RADIUS + HEX_BASE;
+
+		hex_select_stage.addChild(hex_label_simple);
 		hex_select_stage.addChild(hex_button_simple.shape);
 
 		hex_button_medium.set_x(HEX_RADIUS * 5);
@@ -50,6 +56,12 @@ $(document).ready(function() {
 		hex_button_medium.addEventListener("click", function() {
 			add_new_hex(new HexVertex({color: HEX_BROWN, terrain: TERRAIN_MEDIUM}));
 		});
+
+		var hex_label_medium = new createjs.Text("Difficult", "bold 18px Arial", HEX_BROWN);
+		hex_label_medium.x = HEX_RADIUS * 4;
+		hex_label_medium.y = 50 + HEX_RADIUS + HEX_BASE;
+
+		hex_select_stage.addChild(hex_label_medium);
 		hex_select_stage.addChild(hex_button_medium.shape);
 
 		hex_button_hard.set_x(HEX_RADIUS * 8);
@@ -57,6 +69,12 @@ $(document).ready(function() {
 		hex_button_hard.addEventListener("click", function() {
 			add_new_hex(new HexVertex({color: HEX_RED, terrain: TERRAIN_HARD}));
 		});
+
+		var hex_label_hard = new createjs.Text("Ardous", "bold 18px Arial", HEX_RED);
+		hex_label_hard.x = HEX_RADIUS * 7;
+		hex_label_hard.y = 50 + HEX_RADIUS + HEX_BASE;
+
+		hex_select_stage.addChild(hex_label_hard);
 		hex_select_stage.addChild(hex_button_hard.shape);
 
 		current_hex = null;
