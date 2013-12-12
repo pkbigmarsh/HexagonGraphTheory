@@ -47,9 +47,22 @@ function get_new_edges(cur_hex, end_hex)
 {
 	var angle = angle_between_two_points(cur_hex.get_pos(), end_hex.get_pos());
 	var dir_start = get_hextant(angle);
-	dir_start = get_previous(dir_start);
+	var change = 2;
+	var dir_angle = get_direction_angle(dir_start);
+
+	if(dir_start == cur_hex.get_direction_to_hex(end_hex))
+	{
+		dir_start = get_previous(dir_start);
+		change = 3;
+	}
+	else if(angle < dir_angle)
+	{
+		dir_start = get_previous(dir_start);
+	}
+
+
 	var new_edges = [];
-	for(var i = dir_start; i < dir_start + 3; i ++)
+	for(var i = dir_start; i < dir_start + change; i ++)
 	{
 		var dir = i % 6;
 		if(cur_hex.neighbors[i] != null)
@@ -113,7 +126,7 @@ function my_next_edge()
 	else
 	{
 		clearInterval(timer);
-		enable_buttons();
+		recreate();
 	}
 }
 
@@ -121,4 +134,27 @@ function visited_target()
 {
 	var index = selected_end.graph_index;
 	return graph.hex_visited[index];
+}
+
+function recreate()
+{
+	var index = selected_end.graph_index;
+	clear_edges();
+	while(graph.parent[index] != index)
+	{
+		var parent = graph.parent[index];
+		console.log("index: ", index);
+		console.log("parent: ", parent);
+		var data = {
+			from: graph.hexes[parent],
+			to: graph.hexes[index]
+		};
+		var edge = new HexEdge(data);
+		edge.draw_directed();
+		placed_edges.push(edge);
+		main_stage.addChild(edge.shape);
+		index = parent;
+	}
+
+	enable_buttons();
 }

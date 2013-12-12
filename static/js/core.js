@@ -83,6 +83,33 @@ function angle_between_two_points(start_point, end_point)
 
 }
 
+function get_direction_angle(direction)
+{
+	switch(direction)
+	{
+	case NN:
+		return ANGLE_NN;
+		break;
+	case NE:
+		return ANGLE_NE;
+		break;
+	case SE:
+		return ANGLE_SE;
+		break;
+	case SS:
+		return ANGLE_SS;
+		break;
+	case SW:
+		return ANGLE_SW;
+		break;
+	case NW:
+		return ANGLE_NW;
+		break;
+	}
+
+	return -1;
+}
+
 function get_hextant(angle)
 {
 	if(angle > Math.PI * 2)
