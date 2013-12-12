@@ -34,11 +34,21 @@
 			as well as a <a href="#my_algorithm">pathing algorithm</a> designed by myself.
 		</p>
 	</div>
+	<div class="row">
+		<fieldset>
+			<legend>How to use</legend>
+			<p>
+			To use the demonstration click any one of the example hexagons. Then click in the main box to place the 
+			new hexagon. When you are satisfied with the hexagons you placed you can choose an algorithm to run by clicking 
+			it's button. The graph creator isn't perfect, but it works well enough. See the <a href="#rules">rules</a> below 
+			to learn how the different hexes interact with each other.
+			</p>
+		</fieldset>
+	</div>
 	<div class="row" style="height: 600px;">
 		<div class="row closed" style="height: 80%">
 			<div class="large-2 columns closed parent_height">
 				<div class="row parent_height half closed" id="button_pannel">
-
 					<div class="row" style="padding-top: 3px;">
 						<div class="large-12 columns">
 							<a id="prims_button" class="button radius fill small fit_text">Prim's Algorithm</a>
@@ -103,6 +113,7 @@
 		</div>
 	</div>
 	<div class="row">
+		<a name="rules"></a>
 		<fieldset>
 			<legend>Rules</legend>
 			<ul>
@@ -131,7 +142,14 @@
 			</div>
 			<div class="row">
 				<div class="large-10 large-offset-1 end columns nice_paragraph">
-					<p>Here is where I will describe Prim's algorithm as well as psudo code and what nots.</p>
+					<p>
+					Prim's Algorithm is designed to create a minimum spanning tree of the given graph. It finds
+					a path from the origin node to every other node in the graph with the least amount of effort.
+					You start at the selected node and gather all edges to un-visited nodes. Visit each one of
+					the collected edges and find the one with the smallest weight, and add it to the tree.
+					Add each edge from the new node to it's unvisited neighbors. And again find the smallest edge.
+					Repeat until all nodes have been visited.
+					</p>
 				</div>
 			</div>
 		</div>
@@ -146,7 +164,12 @@
 			</div>
 			<div class="row">
 				<div class="large-10 large-offset-1 end columns nice_paragraph">
-					<p>Here is where I will describe Prim's algorithm as well as psudo code and what nots.</p>
+					<p>
+					Kruksel's Algorithm also creates a minimum spanning tree but in a different fasion.
+					Start by listing every possible edge. Sort these edges by weight. Start at the beginning 
+					For every edge in this sorted list, if both nodes of the edge are not connected. Add the 
+					edge to the tree. Continue until all nodes have been visited.
+					</p>
 				</div>
 			</div>
 		</div>
@@ -161,7 +184,12 @@
 			</div>
 			<div class="row">
 				<div class="large-10 large-offset-1 end columns nice_paragraph">
-					<p>Here is where I will describe Prim's algorithm as well as psudo code and what nots.</p>
+					<p>
+					Dijkstra's Algorithm is Prim's algorithm for shortest path's instead of a minimum spanning tree. 
+					The difference is what it checks to add the node to the spanning tree. It checks total distance 
+					instead of just the edge weight. So it keeps a running total of distance to every visited node.
+					And adds the node that adds the least amount of weight to the tree.
+					</p>
 				</div>
 			</div>
 		</div>
@@ -176,7 +204,13 @@
 			</div>
 			<div class="row">
 				<div class="large-10 large-offset-1 end columns nice_paragraph">
-					<p>Here is where I will describe Prim's algorithm as well as psudo code and what nots.</p>
+					<p>
+					All Pair's algorithm uses a connection matrix. A connection matrix is a N x N matrix
+					where [i][j] is the weight of the edge between i and j if there is a connection. To create 
+					there shortest path between two nodes you have to iterate through three nested loops 
+					for k = 1 k < N, for i = 1 i < N, and for j = 1 j < N. In each iteration you check to see
+					if [i][k] + [k][j] < [i][j] then the path from i to j is shorter from i to k to j.
+					</p>
 				</div>
 			</div>
 		</div>
@@ -191,7 +225,12 @@
 			</div>
 			<div class="row">
 				<div class="large-10 large-offset-1 end columns nice_paragraph">
-					<p>Here is where I will describe Prim's algorithm as well as psudo code and what nots.</p>
+					<p>
+					My algorithm is an adaptation of Kruskel's to find the shortest path between two nodes. 
+					Instead of adding evey edge of the new node, it adds the edges that are within 60&deg; of 
+					the angle from the current node to the destination node with a base of the x axis. And
+					the proceeds with the normal Kruskel algorithm.
+					</p>
 				</div>
 			</div>
 		</div>

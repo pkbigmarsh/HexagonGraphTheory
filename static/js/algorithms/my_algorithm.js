@@ -25,6 +25,9 @@ function my_start()
 		return true;
 	}
 
+	if(selected_start != null)
+		selected_start.highlight();
+
 	main_stage.removeEventListener("stagemousemove", ap_highlight);
 	main_stage.removeEventListener("stagemousedown", my_start);
 	
