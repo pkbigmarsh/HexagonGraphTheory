@@ -200,8 +200,10 @@ function HexVertex(parameters){
 		if(other_hex == null)
 		{
 			throw_error("get_direction_to_hex", "Given Hex is empty", other_hex);
-			return null;
+			return -1;
 		}
+		if(this.get_distance(other_hex) > HEX_RADIUS * 2)
+			return -1;
 		other_hex = other_hex.get_bottom();
 
 		return this.get_direction_to_point(other_hex.get_pos());
