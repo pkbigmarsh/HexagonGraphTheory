@@ -14,7 +14,17 @@ function HexEdge(parameters) {
 		}
 		
 		var dis = Math.abs(this.from.terrain - this.to.terrain);
-		dis += Math.abs(this.from.height - this.to.height);
+		var height_gap = this.from.height - this.to.height;
+		if(height_gap < 0)
+		{
+			height_gap = Math.abs(height_gap) - 1;
+			dis += Math.pow(2, height_gap);
+		}
+		else
+		{
+			height_gap -= 1;
+			dis += height_gap;
+		}
 
 		this.distance = dis + 1; // Can never be 0
 		return true;
